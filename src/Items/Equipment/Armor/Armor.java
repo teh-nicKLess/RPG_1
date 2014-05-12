@@ -44,7 +44,7 @@ public final class Armor extends Equipment {
         this.slot = slot;
         this.type = type;
         super.setQuality(qual);
-        this.value = this.calculateArmor(qual, ArmorValues.getArmor(type));
+        this.value = this.calculateArmor(slot, qual, ArmorValues.getArmor(type));
         super.setDurability(this.calculateHealth(qual, ArmorValues.getHP(type)));
         //TODO super.setName();
     }
@@ -61,7 +61,7 @@ public final class Armor extends Equipment {
         return type;
     }
     
-    private int calculateArmor(Quality qual, int[] armorValues) {
+    private int calculateArmor(Slot slot, Quality qual, int[] armorValues) {
         final int max;
         switch (qual) {
             case UNIQUE:
@@ -73,7 +73,7 @@ public final class Armor extends Equipment {
             default:        assert false; max = 0;
         }
         final int min = max / 2;
-        return min + Randomizer.getRandomNumber(((max - min) + 1));
+        return (int)(min + Randomizer.getRandomNumber(((max - min) + 1))) * slot.getMultiplier();
     }
 
     protected final int calculateHealth(Quality qual, int[] healthValues) {
@@ -88,6 +88,12 @@ public final class Armor extends Equipment {
             default:        assert false; hp = 0;
         }
         return hp;
+    }
+    
+    @Override
+    public String toString() {
+        String str = "Slot: " + slot + "; Type: " + type + "; Quality: " + super.getQuality() + "; Armour: " + value;
+        return str;
     }
     
 }

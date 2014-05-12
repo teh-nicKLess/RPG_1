@@ -16,7 +16,7 @@ public enum Material {
 	private final Weight weight;
 	
 	
-	Material(double baseValue, String label, Weight weight) {
+	private Material(double baseValue, String label, Weight weight) {
 		this.baseValue = baseValue;
 		this.label = label;
 		this.weight = weight;

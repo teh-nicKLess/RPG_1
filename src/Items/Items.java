@@ -10,18 +10,18 @@ public abstract class Items {
         return name;
     }
     
+    public final Quality getQuality() {
+        return quality;
+    } 
+        
     protected final void setName(String name) {
-        if (this.name == null) {
+        if (this.name == null && name != null) {
             this.name = name.trim();
         }
     }
     
-    public final Quality getQuality() {
-        return quality;
-    } 
-    
     protected final void setQuality(Quality qual) {
-        if (quality == null) {
+        if (quality == null && qual != null) {
             this.quality = qual;
         }
     }

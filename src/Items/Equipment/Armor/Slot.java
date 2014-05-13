@@ -4,7 +4,7 @@ import Utilities.Randomizer;
 
 public enum Slot {
     
-    ARMS((byte)1), FEET((byte)1), HEAD((byte)2), LEGS((byte)3), TORSO((byte)5);
+    HANDS((byte)1), FEET((byte)1), HEAD((byte)2), LEGS((byte)3), TORSO((byte)5);
     
     private final byte multiplier;
 
@@ -19,5 +19,5 @@ public enum Slot {
     public static Slot getRandomSlot() {
         return Slot.values()[Randomizer.getRandomNumber(Slot.values().length)]; 
     }
-    
+        
 }

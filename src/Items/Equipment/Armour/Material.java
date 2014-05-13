@@ -1,4 +1,4 @@
-package Items.Equipment.Armor;
+package Items.Equipment.Armour;
 
 import Items.Equipment.Weight;
 import Utilities.Randomizer;

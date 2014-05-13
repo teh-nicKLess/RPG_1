@@ -37,6 +37,9 @@ public abstract class Equipment extends Items {
         }   
     }
     
+    public abstract Weight getWeight();
+    //TODO public abstract MagicAttribute getMagic();
+    
     protected final void setDurability(Quality qual, int durability) {
         if (maxDurability == 0) {
             final int max;

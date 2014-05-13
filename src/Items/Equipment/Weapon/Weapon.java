@@ -1,6 +1,7 @@
 package Items.Equipment.Weapon;
 
 import Items.Equipment.Equipment;
+import Items.Equipment.Weight;
 import Items.Quality;
 import Utilities.Randomizer;
 
@@ -64,6 +65,11 @@ public final class Weapon extends Equipment {
     public String toString() {
         String str = "Range: " + range + "; Type: " + type + "; Quality: " + super.getQuality() + "; Damage: " + damage;
         return str;
+    }
+
+    @Override
+    public Weight getWeight() {
+        return type.getWeight();
     }
 
 }

@@ -1,4 +1,4 @@
-package Items.Equipment.Armor;
+package Items.Equipment.Armour;
 
 import Items.Equipment.Equipment;
 import Items.Equipment.Weight;
@@ -8,7 +8,7 @@ import java.util.EnumMap;
 import java.util.ResourceBundle;
 
 
-public final class Armor extends Equipment {
+public final class Armour extends Equipment {
     
     private final int value;
     private final Slot slot;
@@ -51,35 +51,35 @@ public final class Armor extends Equipment {
         nameSlot.put(Weight.LIGHT, nameSlotLight);
     }
     
-    public Armor() {
+    public Armour() {
         this(Slot.getRandomSlot(), Material.getRandomType(), Quality.getRandomQuality());
     }
     
-    public Armor(Material type) {
+    public Armour(Material type) {
         this(Slot.getRandomSlot(), type, Quality.getRandomQuality());
     }
     
-    public Armor(Slot slot) {
+    public Armour(Slot slot) {
         this(slot, Material.getRandomType(), Quality.getRandomQuality());
     }
     
-    public Armor(Quality qual) {
+    public Armour(Quality qual) {
         this(Slot.getRandomSlot(), Material.getRandomType(), qual);
     }
     
-    public Armor(Slot slot, Material type) {
+    public Armour(Slot slot, Material type) {
         this(slot, type, Quality.getRandomQuality());
     }
     
-    public Armor(Slot slot, Quality qual) {
+    public Armour(Slot slot, Quality qual) {
         this(slot, Material.getRandomType(), qual);
     }
     
-    public Armor(Material type, Quality qual) {
+    public Armour(Material type, Quality qual) {
         this(Slot.getRandomSlot(), type, qual);
     }
     
-    public Armor(Slot slot, Material mat, Quality qual) {
+    public Armour(Slot slot, Material mat, Quality qual) {
         this.slot = slot;
         this.mat = mat;
         super.setQuality(qual);
@@ -119,6 +119,11 @@ public final class Armor extends Equipment {
     public String toString() {
         String str = "Slot: " + slot + "; Type: " + mat + "; Quality: " + super.getQuality() + "; Armour: " + value;
         return str;
+    }
+
+    @Override
+    public Weight getWeight() {
+        return mat.getWeight();
     }
     
 }

@@ -34,13 +34,6 @@ public class RPG_1 extends SimpleApplication {
             System.out.println(w);
         }
         
-        
-        /*ResourceBundle messages = ResourceBundle.getBundle("Internationalization.MessagesBundle", currentLocale);
-        
-        System.out.println(messages.getString("greetings"));
-        System.out.println(messages.getString("inquiry"));
-        System.out.println(messages.getString("farewell"));*/
-        
     }
 
 }

@@ -27,9 +27,9 @@ public final class Weapon extends Equipment {
     public Weapon(Type type, Quality qual) {
         this.type = type;
         super.setQuality(qual);
-        this.damage = this.calculateDamage(qual, WeaponValues.getDamage(type));
-        super.setDurability(this.calculateHealth(qual, WeaponValues.getHP()));
-        this.range = 100;
+        this.damage = this.calculateDamage(qual, type.getBaseDamage());
+        super.setDurability(qual, type.getDurability());
+        this.range = 100; //TODO setRange
         //TODO super.setName();
     }
     
@@ -45,32 +45,25 @@ public final class Weapon extends Equipment {
         return range;
     }
     
-    private int calculateDamage(Quality qual, int[] dmgValues) {
+    private int calculateDamage(Quality qual, int dmg) {
         final int max;
         switch (qual) {
             case UNIQUE:
-            case LEGENDARY: max = dmgValues[4];     break;
-            case EPIC:      max = dmgValues[3];     break;
-            case RARE:      max = dmgValues[2];     break;
-            case UNCOMMON:  max = dmgValues[1];     break;
-            case COMMON:    max = dmgValues[0];     break;
+            case LEGENDARY: max = dmg;     break;
+            case EPIC:      max = dmg;     break;
+            case RARE:      max = dmg;     break;
+            case UNCOMMON:  max = dmg;     break;
+            case COMMON:    max = dmg;     break;
             default:        assert false; max = 0;
         }
         final int min = max / 2;
         return min + Randomizer.getRandomNumber(((max - min) + 1));
     }
-
-    protected final int calculateHealth(Quality qual, int[] healthValues) {
-        int hp = Randomizer.getRandomNumber(51);
-        switch (qual) {
-            case UNIQUE:
-            case LEGENDARY: hp += healthValues[4];     break;
-            case EPIC:      hp += healthValues[3];     break;
-            case RARE:      hp += healthValues[2];     break;
-            case UNCOMMON:  hp += healthValues[1];     break;
-            case COMMON:    hp += healthValues[0];     break;
-            default:        assert false; hp = 0;
-        }
-        return hp;
+    
+    @Override
+    public String toString() {
+        String str = "Range: " + range + "; Type: " + type + "; Quality: " + super.getQuality() + "; Damage: " + damage;
+        return str;
     }
+
 }

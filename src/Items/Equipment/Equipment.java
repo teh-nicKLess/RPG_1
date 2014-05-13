@@ -19,14 +19,6 @@ public abstract class Equipment extends Items {
         return maxDurability;
     }
     
-    protected final void setDurability(int hp) {
-        if (maxDurability == 0) {
-            maxDurability = hp;
-            currentDurability = (int)(Math.max(0.5f * hp, Randomizer.getRandomNumber(hp + 1)));
-            //TODO rethink
-        }
-    }
-    
     public final void repair() {
         currentDurability = maxDurability;
     }
@@ -45,6 +37,23 @@ public abstract class Equipment extends Items {
         }   
     }
     
-    protected abstract int calculateHealth(Quality qual, int[] healthValues);
+    protected final void setDurability(Quality qual, int durability) {
+        if (maxDurability == 0) {
+            final int max;
+            switch (qual) {
+                case UNIQUE:
+                case LEGENDARY: max = durability * 5; break;
+                case EPIC:      max = durability * 4; break;
+                case RARE:      max = durability * 3; break; 
+                case UNCOMMON:  max = durability * 2; break;
+                case COMMON:    max = durability; break;
+                default:        assert false; max = 0;
+            }
+            final int min = max / 2;
+            
+            maxDurability = min + Randomizer.getRandomNumber(((max - min) + 1));
+            currentDurability = (int)(Math.max(0.5f * maxDurability, Randomizer.getRandomNumber(maxDurability + 1)));
+        }
+    }
     
 }

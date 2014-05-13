@@ -9,43 +9,43 @@ public final class Armor extends Equipment {
     
     private final int value;
     private final Slot slot;
-    private final Type type;
+    private final Material mat;
     
     
     public Armor() {
-        this(Slot.getRandomSlot(), Type.getRandomType(), Quality.getRandomQuality());
+        this(Slot.getRandomSlot(), Material.getRandomType(), Quality.getRandomQuality());
     }
     
-    public Armor(Type type) {
+    public Armor(Material type) {
         this(Slot.getRandomSlot(), type, Quality.getRandomQuality());
     }
     
     public Armor(Slot slot) {
-        this(slot, Type.getRandomType(), Quality.getRandomQuality());
+        this(slot, Material.getRandomType(), Quality.getRandomQuality());
     }
     
     public Armor(Quality qual) {
-        this(Slot.getRandomSlot(), Type.getRandomType(), qual);
+        this(Slot.getRandomSlot(), Material.getRandomType(), qual);
     }
     
-    public Armor(Slot slot, Type type) {
+    public Armor(Slot slot, Material type) {
         this(slot, type, Quality.getRandomQuality());
     }
     
     public Armor(Slot slot, Quality qual) {
-        this(slot, Type.getRandomType(), qual);
+        this(slot, Material.getRandomType(), qual);
     }
     
-    public Armor(Type type, Quality qual) {
+    public Armor(Material type, Quality qual) {
         this(Slot.getRandomSlot(), type, qual);
     }
     
-    public Armor(Slot slot, Type type, Quality qual) {
+    public Armor(Slot slot, Material mat, Quality qual) {
         this.slot = slot;
-        this.type = type;
+        this.mat = mat;
         super.setQuality(qual);
-        this.value = this.calculateArmor(slot, qual, ArmorValues.getArmor(type));
-        super.setDurability(this.calculateHealth(qual, ArmorValues.getHP(type)));
+        this.value = this.calculateArmor(slot, qual, mat.getBaseValue());
+        super.setDurability(qual, mat.getDurability());
         //TODO super.setName();
     }
     
@@ -57,42 +57,28 @@ public final class Armor extends Equipment {
         return slot;
     }
     
-    public final Type getType() {
-        return type;
+    public final Material getType() {
+        return mat;
     }
     
-    private int calculateArmor(Slot slot, Quality qual, int[] armorValues) {
+    private int calculateArmor(Slot slot, Quality qual, int armorValue) {
         final int max;
         switch (qual) {
             case UNIQUE:
-            case LEGENDARY: max = armorValues[4]; break;
-            case EPIC:      max = armorValues[3]; break;
-            case RARE:      max = armorValues[2]; break; 
-            case UNCOMMON:  max = armorValues[1]; break;
-            case COMMON:    max = armorValues[0]; break;
+            case LEGENDARY: max = armorValue * 5; break;
+            case EPIC:      max = armorValue * 4; break;
+            case RARE:      max = armorValue * 3; break; 
+            case UNCOMMON:  max = armorValue * 2; break;
+            case COMMON:    max = armorValue; break;
             default:        assert false; max = 0;
         }
         final int min = max / 2;
-        return (int)(min + Randomizer.getRandomNumber(((max - min) + 1))) * slot.getMultiplier();
-    }
-
-    protected final int calculateHealth(Quality qual, int[] healthValues) {
-        int hp = Randomizer.getRandomNumber(51);
-        switch (qual) {
-            case UNIQUE:
-            case LEGENDARY: hp += healthValues[4]; break;
-            case EPIC:      hp += healthValues[3]; break;
-            case RARE:      hp += healthValues[2]; break; 
-            case UNCOMMON:  hp += healthValues[1]; break;
-            case COMMON:    hp += healthValues[0]; break;
-            default:        assert false; hp = 0;
-        }
-        return hp;
+        return min + Randomizer.getRandomNumber(((max - min) + 1)) * slot.getMultiplier();
     }
     
     @Override
     public String toString() {
-        String str = "Slot: " + slot + "; Type: " + type + "; Quality: " + super.getQuality() + "; Armour: " + value;
+        String str = "Slot: " + slot + "; Type: " + mat + "; Quality: " + super.getQuality() + "; Armour: " + value;
         return str;
     }
     

@@ -1,6 +1,7 @@
 package mygame;
 
 import Items.Equipment.Armor.Armor;
+import Items.Equipment.Weapon.Weapon;
 import com.jme3.app.SimpleApplication;
 
 
@@ -19,6 +20,9 @@ public class Main extends SimpleApplication {
         for (int i = 0; i < iterations; i++) {
             Armor a = new Armor();
             System.out.println(a);
+            
+            Weapon w = new Weapon();
+            System.out.println(w);
         }
         
     }

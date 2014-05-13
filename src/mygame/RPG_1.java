@@ -20,8 +20,8 @@ public class RPG_1 extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         
-        final int iterations = 2;
-        String language = "de";
+        final int iterations = 5;
+        String language = "en";
         currentLocale = new Locale(language);
         
         

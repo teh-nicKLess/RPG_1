@@ -57,7 +57,7 @@ public final class Armor extends Equipment {
         return slot;
     }
     
-    public final Material getType() {
+    public final Material getMaterial() {
         return mat;
     }
     

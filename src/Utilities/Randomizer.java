@@ -16,4 +16,8 @@ public abstract class Randomizer {
         return rnd.nextInt();
     }
     
+    public static double getNextGaussian() {
+        return rnd.nextGaussian();
+    }
+    
 }

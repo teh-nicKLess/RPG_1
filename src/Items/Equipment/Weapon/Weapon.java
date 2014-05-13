@@ -29,7 +29,7 @@ public final class Weapon extends Equipment {
         super.setQuality(qual);
         this.damage = this.calculateDamage(qual, type.getBaseDamage());
         super.setDurability(qual, type.getDurability());
-        this.range = 100; //TODO setRange
+        this.range = type.getRange(); //TODO range durch magie veraenderbar?
         //TODO super.setName();
     }
     

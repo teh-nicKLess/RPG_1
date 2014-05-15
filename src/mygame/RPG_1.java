@@ -30,6 +30,7 @@ public class RPG_1 extends SimpleApplication {
             
             final Weapon w = new Weapon();
             System.out.println(w);
+            System.out.println(w.getName());
             
         }
                 

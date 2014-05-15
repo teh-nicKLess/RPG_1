@@ -78,11 +78,11 @@ public abstract class Equipment extends Items {
             final MagicAttribute rndMagic = MagicAttribute.getRandomMagic();
             magicMap.put(rndMagic, Randomizer.getRandomNumber(rndMagic.getStat() + qualityBonus));
         }
-        this.magic = (EnumMap) Collections.unmodifiableMap(magicMap);
+        this.magic = magicMap;
     }
     
     public EnumMap<MagicAttribute, Integer> getMagicAttributes() {
-        return this.magic;
+        return this.magic.clone();
     }
     
 }

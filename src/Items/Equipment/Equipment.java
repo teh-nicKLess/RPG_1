@@ -3,7 +3,6 @@ package Items.Equipment;
 import Items.Items;
 import Items.Quality;
 import Utilities.Randomizer;
-import java.util.Collections;
 import java.util.EnumMap;
 
 
@@ -75,7 +74,14 @@ public abstract class Equipment extends Items {
         }
         for (int i = 0; i < slots; i++) {
             final MagicAttribute rndMagic = MagicAttribute.getRandomMagic();
-            magicMap.put(rndMagic, Randomizer.getRandomNumber(rndMagic.getStat() + qualityBonus));
+            final int value = Randomizer.getRandomNumber(rndMagic.getStat() + qualityBonus);
+            if (magicMap.containsKey(rndMagic)) {
+                if (magicMap.get(rndMagic) < value) {
+                    magicMap.put(rndMagic, value);
+                }
+            } else {
+                magicMap.put(rndMagic, value);
+            }
         }
         this.magic = magicMap;
     }

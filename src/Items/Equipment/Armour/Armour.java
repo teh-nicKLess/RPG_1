@@ -1,6 +1,7 @@
 package Items.Equipment.Armour;
 
 import Items.Equipment.Equipment;
+import Items.Equipment.MagicAttribute;
 import Items.Equipment.Weight;
 import Items.Quality;
 import Utilities.Randomizer;
@@ -10,7 +11,8 @@ import java.util.ResourceBundle;
 
 public final class Armour extends Equipment {
     
-    private final int value;
+    private final int physicalArmour;
+    private final int magicalArmour;
     private final Slot slot;
     private final Material mat;
     private final static EnumMap<Material, String> nameMat = new EnumMap<Material, String>(Material.class);
@@ -82,15 +84,36 @@ public final class Armour extends Equipment {
     public Armour(Material mat, Slot slot, Quality qual) {
         this.mat = mat;
         this.slot = slot;
-        this.value = this.calculateArmor(slot, qual, mat.getBaseValue());
+        this.physicalArmour = this.calculatePhysicalArmor(slot, qual, mat.getBaseValue());
+        this.magicalArmour = this.calculateMagicalArmor(qual);
         super.setQuality(qual);
         super.setDurability(qual, mat.getDurability());
         super.setName(nameMat.get(mat) + nameSlot.get(mat.getWeight()).get(slot));
         super.setMagicAttributes(mat.getMaxMagicSlots(), qual);
     }
     
-    public final int getValue() {
+    public final int getPhysicalArmour() {
+        int value = magicalArmour;
+        final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
+        if (magic.containsKey(MagicAttribute.ARMOUR)) {
+            value += magic.get(MagicAttribute.ARMOUR);
+        }
+        if (magic.containsKey(MagicAttribute.DAMAGEREDUCTION)) {
+            value += magic.get(MagicAttribute.DAMAGEREDUCTION);
+        }
         return value;
+    }
+    
+    public final int getMagicalArmour() {
+        int value = magicalArmour;
+        final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
+        if (magic.containsKey(MagicAttribute.SPELLRESISTANCE)) {
+            value += magic.get(MagicAttribute.SPELLRESISTANCE);
+        }
+        if (magic.containsKey(MagicAttribute.DAMAGEREDUCTION)) {
+            value += magic.get(MagicAttribute.DAMAGEREDUCTION);
+        }
+        return value;        
     }
     
     public final Slot getSlot() {
@@ -101,7 +124,7 @@ public final class Armour extends Equipment {
         return mat;
     }
     
-    private int calculateArmor(Slot slot, Quality qual, int armorValue) {
+    private int calculatePhysicalArmor(Slot slot, Quality qual, int armorValue) {
         int max = armorValue * slot.getMultiplier();
         switch (qual) {
             case UNIQUE:
@@ -116,9 +139,23 @@ public final class Armour extends Equipment {
         return min + Randomizer.getRandomNumber(((max - min) + 1));
     }
     
+    private int calculateMagicalArmor(Quality qual) {
+        final int value;
+        switch (qual) {
+            case UNIQUE:
+            case LEGENDARY: value = 25; break;
+            case EPIC:      value = 20; break;
+            case RARE:      value = 15; break; 
+            case UNCOMMON:  value = 5;  break;
+            case COMMON:    value = 0;  break;
+            default:        assert false; value = 0;
+        }
+        return value;
+    }
+    
     @Override
     public String toString() {
-        return "Slot: " + slot + "; Material: " + mat + "; Quality: " + super.getQuality() + "; Armour: " + value;
+        return "Slot: " + slot + "; Material: " + mat + "; Quality: " + super.getQuality() + "; Armour: " + physicalArmour;
     }
 
     @Override

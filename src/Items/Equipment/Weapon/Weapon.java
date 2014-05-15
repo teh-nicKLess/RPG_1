@@ -1,6 +1,7 @@
 package Items.Equipment.Weapon;
 
 import Items.Equipment.Equipment;
+import Items.Equipment.MagicAttribute;
 import Items.Equipment.Weight;
 import Items.Quality;
 import Utilities.Randomizer;
@@ -49,11 +50,29 @@ public final class Weapon extends Equipment {
         super.setDurability(qual, type.getDurability());
         this.range = type.getRange();
         super.setName(nameMap.get(type));
-        super.setMagicAttributes(type.getMaxMagicSlots(), qual);
+        final int magicSlots;
+        switch (qual) {
+            case UNIQUE:
+            case LEGENDARY: magicSlots = 2;     break;
+            case EPIC:      
+            case RARE:      magicSlots = 1;     break;
+            case UNCOMMON:  
+            case COMMON:    magicSlots = 0;     break;
+            default:        assert false; magicSlots = 0;
+        }
+        super.setMagicAttributes(magicSlots, qual);
     }
     
     public final int getDamage() {
-        return damage;
+        int value = damage;
+        final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
+        if (magic.containsKey(MagicAttribute.WEAPONDAMAGE)) {
+            value += magic.get(MagicAttribute.WEAPONDAMAGE);
+        }
+        if (magic.containsKey(MagicAttribute.DAMAGE)) {
+            value += magic.get(MagicAttribute.DAMAGE);
+        }
+        return value;
     } 
     
     public final Type getType() {

@@ -4,6 +4,8 @@ import Items.Equipment.Equipment;
 import Items.Equipment.Weight;
 import Items.Quality;
 import Utilities.Randomizer;
+import java.util.EnumMap;
+import java.util.ResourceBundle;
 
 
 public final class Weapon extends Equipment {
@@ -11,7 +13,22 @@ public final class Weapon extends Equipment {
     private final int damage;
     private final Type type;
     private final int range;
+    private static final EnumMap<Type, String> nameMap = new EnumMap<Type, String>(Type.class);
     
+    static {
+        ResourceBundle names = ResourceBundle.getBundle("Internationalization.Weapon", mygame.RPG_1.currentLocale);
+        nameMap.put(Type.BOW,       names.getString("BOW"));
+        nameMap.put(Type.CROSSBOW,  names.getString("CROSSBOW"));
+        nameMap.put(Type.AXE,       names.getString("AXE"));
+        nameMap.put(Type.MACE,      names.getString("MACE"));
+        nameMap.put(Type.HAMMER,    names.getString("HAMMER"));
+        nameMap.put(Type.SWORD,     names.getString("SWORD"));
+        nameMap.put(Type.LONGSWORD, names.getString("LONGSWORD"));
+        nameMap.put(Type.SHIELD,    names.getString("SHIELD"));
+        nameMap.put(Type.SPEAR,     names.getString("SPEAR"));
+        nameMap.put(Type.DAGGER,    names.getString("DAGGER"));
+        nameMap.put(Type.STAFF,     names.getString("STAFF"));
+    }
     
     public Weapon() {
         this(Type.getRandomType(), Quality.getRandomQuality());
@@ -31,7 +48,7 @@ public final class Weapon extends Equipment {
         this.damage = this.calculateDamage(qual, type.getBaseDamage());
         super.setDurability(qual, type.getDurability());
         this.range = type.getRange();
-        //TODO super.setName();
+        super.setName(nameMap.get(type));
         super.setMagicAttributes(type.getMaxMagicSlots(), qual);
     }
     

@@ -1,11 +1,9 @@
 package Items.Equipment.Armour;
 
 import Items.Equipment.Equipment;
-import Items.Equipment.MagicAttribute;
 import Items.Equipment.Weight;
 import Items.Quality;
 import Utilities.Randomizer;
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.ResourceBundle;
 

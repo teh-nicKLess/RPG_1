@@ -30,8 +30,9 @@ public final class Weapon extends Equipment {
         super.setQuality(qual);
         this.damage = this.calculateDamage(qual, type.getBaseDamage());
         super.setDurability(qual, type.getDurability());
-        this.range = type.getRange(); //TODO range durch magie veraenderbar?
+        this.range = type.getRange();
         //TODO super.setName();
+        super.setMagicAttributes(type.getMaxMagicSlots(), qual);
     }
     
     public final int getDamage() {
@@ -63,12 +64,11 @@ public final class Weapon extends Equipment {
     
     @Override
     public String toString() {
-        String str = "Range: " + range + "; Type: " + type + "; Quality: " + super.getQuality() + "; Damage: " + damage;
-        return str;
+        return "Range: " + range + "; Type: " + type + "; Quality: " + super.getQuality() + "; Damage: " + damage;
     }
 
     @Override
-    public Weight getWeight() {
+    public final Weight getWeight() {
         return type.getWeight();
     }
 

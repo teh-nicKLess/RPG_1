@@ -14,7 +14,7 @@ public abstract class Accessory extends Equipment {
     }
     
     @Override
-    public Weight getWeight() {
+    public final Weight getWeight() {
         return Slot.getWeight();
     }
     

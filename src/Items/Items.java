@@ -15,9 +15,9 @@ public abstract class Items {
     } 
         
     protected final void setName(String name) {
-        if (this.name == null && name != null) {
+        if (this.name == null && name != null && !name.trim().isEmpty()) {
             this.name = name.trim();
-        }
+        } 
     }
     
     protected final void setQuality(Quality qual) {

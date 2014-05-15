@@ -5,37 +5,43 @@ import Utilities.Randomizer;
 
 public enum Material {
     
-    WOOL(       20,     100,    Weight.LIGHT), 
-    SILK(       20,     100,    Weight.LIGHT), 
-    LEATHER(    45,     150,    Weight.MEDIUM), 
-    CHAINMAIL(  50,     150,    Weight.MEDIUM), 
-    IRON(       75,     200,    Weight.HEAVY), 
-    STEEL(      100,    200,    Weight.HEAVY);
+    WOOL(       5,      100,    Weight.LIGHT,   4), 
+    SILK(       5,      100,    Weight.LIGHT,   4), 
+    LEATHER(    10,     150,    Weight.MEDIUM,  3), 
+    CHAINMAIL(  15,     150,    Weight.MEDIUM,  2), 
+    IRON(       20,     200,    Weight.HEAVY,   1), 
+    STEEL(      30,     200,    Weight.HEAVY,   0);
     
     
     private final int baseValue;
     private final int durability;
     private final Weight weight;
+    private final int maxMagicSlots;
     
-    private Material(int value, int durability, Weight weight) {
+    private Material(int value, int durability, Weight weight, int maxMagicSlots) {
         this.baseValue = value;
         this.durability = durability;
         this.weight = weight;
+        this.maxMagicSlots = maxMagicSlots + 1;
     }
     
-    public Weight getWeight() {
+    public final Weight getWeight() {
         return weight;
     }
     
-    public int getBaseValue() {
+    public final int getBaseValue() {
         return baseValue;
     }
     
-    public int getDurability() {
+    public final int getDurability() {
         return durability;
     }
     
-    public static Material getRandomType() {
+    public final int getMaxMagicSlots() {
+        return maxMagicSlots;
+    }
+    
+    public static Material getRandomMaterial() {
         return Material.values()[Randomizer.getRandomNumber(Material.values().length)];
     } 
     

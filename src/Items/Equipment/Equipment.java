@@ -3,12 +3,15 @@ package Items.Equipment;
 import Items.Items;
 import Items.Quality;
 import Utilities.Randomizer;
+import java.util.Collections;
+import java.util.EnumMap;
 
 
 public abstract class Equipment extends Items {
     
     private int currentDurability = 0;
     private int maxDurability = 0;
+    private EnumMap<MagicAttribute, Integer> magic;
     
     
     public final int getDurabilityCurrent() {
@@ -57,6 +60,29 @@ public abstract class Equipment extends Items {
             maxDurability = min + Randomizer.getRandomNumber(((max - min) + 1));
             currentDurability = (int)(Math.max(0.5f * maxDurability, Randomizer.getRandomNumber(maxDurability + 1)));
         }
+    }
+    
+    protected void setMagicAttributes(int slots, Quality qual) {
+        final EnumMap<MagicAttribute, Integer> magicMap = new EnumMap<MagicAttribute, Integer>(MagicAttribute.class);
+        final int qualityBonus;
+        switch (qual) {
+            case UNIQUE:
+            case LEGENDARY: qualityBonus = 25; break;
+            case EPIC:      qualityBonus = 20; break;
+            case RARE:      qualityBonus = 15; break; 
+            case UNCOMMON:  qualityBonus = 5;  break;
+            case COMMON:    qualityBonus = 0;  break;
+            default:        assert false; qualityBonus = 0;
+        }
+        for (int i = 0; i < slots; i++) {
+            final MagicAttribute rndMagic = MagicAttribute.getRandomMagic();
+            magicMap.put(rndMagic, Randomizer.getRandomNumber(rndMagic.getStat() + qualityBonus));
+        }
+        this.magic = (EnumMap) Collections.unmodifiableMap(magicMap);
+    }
+    
+    public EnumMap<MagicAttribute, Integer> getMagicAttributes() {
+        return this.magic;
     }
     
 }

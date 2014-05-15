@@ -20,7 +20,7 @@ public enum Quality {
     }
        
     public static Quality getRandomQuality(Quality maxQ) {
-        byte rating = (byte)Randomizer.getRandomNumber(maxQ.getRank() + 1);
+        final byte rating = (byte)Randomizer.getRandomNumber(maxQ.getRank() + 1);
         assert (rating <= maxQ.getRank());
         
         if (rating <= Quality.COMMON.getRank()) {

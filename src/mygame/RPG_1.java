@@ -20,20 +20,19 @@ public class RPG_1 extends SimpleApplication {
     public void simpleInitApp() {
         
         final int iterations = 5;
-        String language = "en";
-        currentLocale = new Locale(language);
-        
+        currentLocale = new Locale(System.getProperty("user.language"));
+                
         
         for (int i = 0; i < iterations; i++) {
-            Armour a = new Armour();
+            final Armour a = new Armour();
             System.out.println(a);
             System.out.println(a.getName());
             
-            Weapon w = new Weapon();
+            final Weapon w = new Weapon();
             System.out.println(w);
             
         }
-        
+                
     }
 
 }

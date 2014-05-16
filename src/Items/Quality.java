@@ -20,6 +20,9 @@ public enum Quality {
     }
        
     public static Quality getRandomQuality(final Quality maxQ) {
+        if (maxQ.equals(UNIQUE)) {
+            throw new IllegalArgumentException("No random uniques!");
+        }
         final byte rating = (byte)Randomizer.getRandomNumber(maxQ.getRank() + 1);
         assert (rating <= maxQ.getRank());
         

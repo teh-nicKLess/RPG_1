@@ -60,7 +60,7 @@ public abstract class Equipment extends Items {
         }
     }
     
-    protected void setMagicAttributes(int slots, Quality qual) {
+    protected void setMagicAttributes(final int finalSlots, final Quality qual) {
         final EnumMap<MagicAttribute, Integer> magicMap = new EnumMap<MagicAttribute, Integer>(MagicAttribute.class);
         final int qualityBonus;
         switch (qual) {
@@ -72,13 +72,14 @@ public abstract class Equipment extends Items {
             case COMMON:    qualityBonus = 0;  break;
             default:        assert false; qualityBonus = 0;
         }
-        for (int i = 0; i < slots; i++) {
+        for (int i = 0; i < finalSlots; i++) {
             final MagicAttribute rndMagic = MagicAttribute.getRandomMagic();
             final int value = Randomizer.getRandomNumber(rndMagic.getStat() + qualityBonus);
             if (magicMap.containsKey(rndMagic)) {
                 if (magicMap.get(rndMagic) < value) {
                     magicMap.put(rndMagic, value);
                 }
+                i--;
             } else {
                 magicMap.put(rndMagic, value);
             }

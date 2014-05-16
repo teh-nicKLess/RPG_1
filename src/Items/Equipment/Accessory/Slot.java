@@ -8,8 +8,20 @@ public enum Slot {
     RING, BRACELET, NECKLACE;
     
     
-    public static Weight getWeight() {
-        return Weight.LIGHT;
+    private final int maxMagicSlots = 4;
+    private final int durability = 200;
+    
+    
+    public final int getMaxMagicSlots() {
+        return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
+    }
+    
+    public final int getDurability() {
+        return durability;
+    }
+    
+    public Weight getWeight() {
+        return Weight.NULL;
     }
     
     public static Slot getRandomSlot() {

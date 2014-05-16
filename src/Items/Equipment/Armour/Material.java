@@ -5,22 +5,22 @@ import Utilities.Randomizer;
 
 public enum Material {
     
-    WOOL(       5,      20,     100,    Weight.LIGHT,   4), 
-    SILK(       5,      20,     100,    Weight.LIGHT,   4), 
-    LEATHER(    10,     15,     150,    Weight.MEDIUM,  3), 
-    CHAINMAIL(  15,     10,     150,    Weight.MEDIUM,  2), 
-    IRON(       20,     5,      200,    Weight.HEAVY,   1), 
-    STEEL(      30,     0,      200,    Weight.HEAVY,   0);
+    WOOL(       5,      20,     100,    Weight.LIGHT,   (byte)4), 
+    SILK(       5,      20,     100,    Weight.LIGHT,   (byte)4), 
+    LEATHER(    10,     15,     150,    Weight.MEDIUM,  (byte)3), 
+    CHAINMAIL(  15,     10,     150,    Weight.MEDIUM,  (byte)2), 
+    IRON(       20,     5,      200,    Weight.HEAVY,   (byte)1), 
+    STEEL(      30,     0,      200,    Weight.HEAVY,   (byte)0);
     
     
     private final int physicalValue;
     private final int magicalValue;
     private final int durability;
     private final Weight weight;
-    private final int maxMagicSlots;
+    private final byte maxMagicSlots;
     
     private Material(final int physicalValue, final int magicalValue, 
-            final int durability, final Weight weight, final int maxMagicSlots) {
+            final int durability, final Weight weight, final byte maxMagicSlots) {
         this.physicalValue = physicalValue;
         this.magicalValue = magicalValue;
         this.durability = durability;

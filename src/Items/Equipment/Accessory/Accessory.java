@@ -16,9 +16,9 @@ public class Accessory extends Equipment {
     
     static {
         final ResourceBundle names = ResourceBundle.getBundle("Internationalization.Accessory", mygame.RPG_1.currentLocale);
-        nameSlot.put(Slot.RING,      names.getString("RING"));
-        nameSlot.put(Slot.NECKLACE,  names.getString("NECKLACE"));
-        nameSlot.put(Slot.BRACELET,  names.getString("BRACELET"));
+        nameSlot.put(Slot.RING,         names.getString("RING"));
+        nameSlot.put(Slot.NECKLACE,     names.getString("NECKLACE"));
+        nameSlot.put(Slot.BRACELET,     names.getString("BRACELET"));
         
         nameMat.put(Material.BONE,      names.getString("BONE"));
         nameMat.put(Material.COPPER,    names.getString("COPPER"));
@@ -26,7 +26,6 @@ public class Accessory extends Equipment {
         nameMat.put(Material.GOLD,      names.getString("GOLD"));
         nameMat.put(Material.RUBY,      names.getString("RUBY"));
         nameMat.put(Material.SAPPHIRE,  names.getString("SAPPHIRE"));
-        
     }
     
     public Accessory() {

@@ -11,6 +11,17 @@ public abstract class Equipment extends Items {
     private int currentDurability = 0;
     private int maxDurability = 0;
     private EnumMap<MagicAttribute, Integer> magic;
+    private final static EnumMap<Quality, Integer> magicQBonus = new EnumMap<Quality, Integer>(Quality.class);
+    
+    static {
+        
+        magicQBonus.put(Quality.COMMON,      0);
+        magicQBonus.put(Quality.UNCOMMON,    5);
+        magicQBonus.put(Quality.RARE,        10);
+        magicQBonus.put(Quality.EPIC,        15);
+        magicQBonus.put(Quality.LEGENDARY,   20);
+        magicQBonus.put(Quality.UNIQUE,      magicQBonus.get(Quality.LEGENDARY));
+    }
     
     
     public final int getDurabilityCurrent() {
@@ -41,42 +52,31 @@ public abstract class Equipment extends Items {
     
     public abstract Weight getWeight();
     
-    protected final void setDurability(Quality qual, int durability) {
+    protected final void setDurability(Quality qual, final int durability) {
         if (maxDurability == 0) {
-            final int max;
-            switch (qual) {
-                case UNIQUE:
-                case LEGENDARY: max = durability * 5; break;
-                case EPIC:      max = durability * 4; break;
-                case RARE:      max = durability * 3; break; 
-                case UNCOMMON:  max = durability * 2; break;
-                case COMMON:    max = durability; break;
-                default:        assert false; max = 0;
-            }
-            final int min = max / 2;
+            final int min = durability / 2;
             
-            maxDurability = min + Randomizer.getRandomNumber(((max - min) + 1));
+            maxDurability = min + Randomizer.getRandomNumber(((durability - min) + 1));
             currentDurability = (int)(Math.max(0.5f * maxDurability, Randomizer.getRandomNumber(maxDurability + 1)));
         }
     }
     
     protected void setMagicAttributes(final int maxSlots, final Quality qual) {
         final EnumMap<MagicAttribute, Integer> magicMap = new EnumMap<MagicAttribute, Integer>(MagicAttribute.class);
-        final int qualityBonus;
         final int minSlots;
         switch (qual) {
             case UNIQUE:
-            case LEGENDARY: qualityBonus = 25; minSlots = maxSlots / 2; break;
-            case EPIC:      qualityBonus = 20; minSlots = maxSlots / 3; break;
-            case RARE:      qualityBonus = 15; minSlots = maxSlots / 4; break; 
-            case UNCOMMON:  qualityBonus = 5;  minSlots = 0;            break;
-            case COMMON:    qualityBonus = 0;  minSlots = 0;            break;
-            default:        assert false; qualityBonus = 0; minSlots = 0;
+            case LEGENDARY: minSlots = maxSlots / 2; break;
+            case EPIC:      minSlots = maxSlots / 3; break;
+            case RARE:      minSlots = maxSlots / 4; break; 
+            case UNCOMMON:  minSlots = 0;            break;
+            case COMMON:    minSlots = 0;            break;
+            default:        assert false; minSlots = 0;
         }
         final int slots = minSlots + Randomizer.getRandomNumber(maxSlots - minSlots);
         for (int i = 0; i < slots; i++) {
             final MagicAttribute rndMagic = MagicAttribute.getRandomMagic();
-            final int value = qualityBonus + Randomizer.getRandomNumber(rndMagic.getStat());
+            final int value = magicQBonus.get(qual) + Randomizer.getRandomNumber(rndMagic.getStat());
             if (magicMap.containsKey(rndMagic)) {
                 if (magicMap.get(rndMagic) < value) {
                     magicMap.put(rndMagic, value);

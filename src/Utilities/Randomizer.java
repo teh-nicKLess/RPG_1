@@ -9,10 +9,7 @@ public abstract class Randomizer {
     
     
     public static int getRandomNumber(final int n) {
-        if (n <= 0) {
-            return 0;
-        }
-        return rnd.nextInt(n);
+        return n <= 0 ?  0 : rnd.nextInt(n);
     }
     
     public static int getRandomNumber() {

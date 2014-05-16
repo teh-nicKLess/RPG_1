@@ -24,7 +24,8 @@ public enum Type {
     private final int range;
     private final int maxMagicSlots;
     
-    private Type(boolean hands, Weight weight, int damage, int durability, int range, int maxMagicSlots) {
+    private Type(final boolean hands, final Weight weight, final int damage, 
+            final int durability, final int range, final int maxMagicSlots) {
         this.twoHands = hands;
         this.weight = weight;
         this.baseDamage = damage;

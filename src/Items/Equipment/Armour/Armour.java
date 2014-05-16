@@ -74,27 +74,27 @@ public final class Armour extends Equipment {
         this(Material.getRandomMaterial(), Slot.getRandomSlot(), Quality.getRandomQuality());
     }
     
-    public Armour(Material mat) {
+    public Armour(final Material mat) {
         this(mat, Slot.getRandomSlot(), Quality.getRandomQuality());
     }
     
-    public Armour(Slot slot) {
+    public Armour(final Slot slot) {
         this(Material.getRandomMaterial(), slot, Quality.getRandomQuality());
     }
     
-    public Armour(Quality qual) {
+    public Armour(final Quality qual) {
         this(Material.getRandomMaterial(), Slot.getRandomSlot(), qual);
     }
     
-    public Armour(Material mat, Slot slot) {
+    public Armour(final Material mat, final Slot slot) {
         this(mat, slot, Quality.getRandomQuality());
     }
     
-    public Armour(Slot slot, Quality qual) {
+    public Armour(final Slot slot, final Quality qual) {
         this(Material.getRandomMaterial(), slot, qual);
     }
     
-    public Armour(Material mat, Quality qual) {
+    public Armour(final Material mat, final Quality qual) {
         this(mat, Slot.getRandomSlot(), qual);
     }
     
@@ -149,16 +149,15 @@ public final class Armour extends Equipment {
         return mat;
     }
     
-    private int calculatePhysicalArmor(Slot slot, Quality qual, int armorValue) {
+    private int calculatePhysicalArmor(final Slot slot, final Quality qual, final int armorValue) {
         final int max = (armorValue + physicalBonus.get(qual)) * slot.getMultiplier();
         final int min = max / 2;
         return min + Randomizer.getRandomNumber(((max - min) + 1));
     }
     
-    private int calculateMagicalArmor(Quality qual, int magicArmor) {
+    private int calculateMagicalArmor(final Quality qual, final int magicArmor) {
         //TODO might want to do more / change stuff
-        final int value = magicalBonus.get(qual) + magicArmor;
-        return value;
+        return magicArmor + magicalBonus.get(qual);
     }
     
     @Override

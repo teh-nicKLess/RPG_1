@@ -36,14 +36,14 @@ public abstract class Equipment extends Items {
         currentDurability = maxDurability;
     }
     
-    public final void repair(int points) {
+    public final void repair(final int points) {
         currentDurability += points;
         if (currentDurability  > maxDurability) {
             this.repair();
         } 
     }
     
-    public final void damage(int dmg) {
+    public final void damage(final int dmg) {
         currentDurability -= dmg;
         if (currentDurability <= 0) {
             //TODO destroy 
@@ -52,7 +52,7 @@ public abstract class Equipment extends Items {
     
     public abstract Weight getWeight();
     
-    protected final void setDurability(Quality qual, final int durability) {
+    protected final void setDurability(final Quality qual, final int durability) {
         if (maxDurability == 0) {
             final int min = durability / 2;
             

@@ -14,13 +14,13 @@ public abstract class Items {
         return quality;
     } 
         
-    protected final void setName(String name) {
+    protected final void setName(final String name) {
         if (this.name == null && name != null && !name.trim().isEmpty()) {
             this.name = name.trim();
         } 
     }
     
-    protected final void setQuality(Quality qual) {
+    protected final void setQuality(final Quality qual) {
         if (quality == null && qual != null) {
             this.quality = qual;
         }

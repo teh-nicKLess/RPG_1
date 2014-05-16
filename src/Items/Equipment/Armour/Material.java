@@ -19,7 +19,8 @@ public enum Material {
     private final Weight weight;
     private final int maxMagicSlots;
     
-    private Material(int physicalValue, int magicalValue, int durability, Weight weight, int maxMagicSlots) {
+    private Material(final int physicalValue, final int magicalValue, 
+            final int durability, final Weight weight, final int maxMagicSlots) {
         this.physicalValue = physicalValue;
         this.magicalValue = magicalValue;
         this.durability = durability;

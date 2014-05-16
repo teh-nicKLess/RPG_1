@@ -8,7 +8,7 @@ public enum Slot {
     
     private final byte multiplier;
 
-    private Slot(byte multiplier) {
+    private Slot(final byte multiplier) {
         this.multiplier = multiplier;
     }
 

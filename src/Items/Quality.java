@@ -11,7 +11,7 @@ public enum Quality {
     
     private final byte rank;
     
-    private Quality(byte rank) {
+    private Quality(final byte rank) {
         this.rank = rank;
     }
     
@@ -19,7 +19,7 @@ public enum Quality {
         return rank;
     }
        
-    public static Quality getRandomQuality(Quality maxQ) {
+    public static Quality getRandomQuality(final Quality maxQ) {
         final byte rating = (byte)Randomizer.getRandomNumber(maxQ.getRank() + 1);
         assert (rating <= maxQ.getRank());
         

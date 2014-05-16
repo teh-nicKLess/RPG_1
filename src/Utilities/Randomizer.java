@@ -8,7 +8,7 @@ public abstract class Randomizer {
     private final static Random rnd = new Random();
     
     
-    public static int getRandomNumber(int n) {
+    public static int getRandomNumber(final int n) {
         if (n <= 0) {
             return 0;
         }

@@ -44,15 +44,15 @@ public final class Weapon extends Equipment {
         this(Type.getRandomType(), Quality.getRandomQuality());
     }
     
-    public Weapon(Type type) {
+    public Weapon(final Type type) {
         this(type, Quality.getRandomQuality());
     }
     
-    public Weapon(Quality qual) {
+    public Weapon(final Quality qual) {
         this(Type.getRandomType(), qual);
     }
         
-    public Weapon(Type type, Quality qual) {
+    public Weapon(final Type type, final Quality qual) {
         this.type = type;
         super.setQuality(qual);
         this.damage = this.calculateDamage(qual, type.getBaseDamage());
@@ -82,7 +82,7 @@ public final class Weapon extends Equipment {
         return range;
     }
     
-    private int calculateDamage(Quality qual, int dmg) {
+    private int calculateDamage(final Quality qual, final int dmg) {
         final int max = dmg + damageBonus.get(qual);
         final int min = max / 2;
         return min + Randomizer.getRandomNumber(((max - min) + 1));

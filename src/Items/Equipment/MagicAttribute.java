@@ -12,7 +12,7 @@ public enum MagicAttribute {
     
     private final int maxStat;
     
-    private MagicAttribute(int stat) {
+    private MagicAttribute(final int stat) {
         this.maxStat = stat + 1;
     }
     

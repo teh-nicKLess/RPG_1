@@ -10,37 +10,68 @@ import java.util.ResourceBundle;
 public class Accessory extends Equipment {
     
     private Slot slot;
-    private static final EnumMap<Slot, String> nameMap = new EnumMap<Slot, String>(Slot.class);
+    private Material mat;
+    private static final EnumMap<Material, String> nameMat = new EnumMap<Material, String>(Material.class);
+    private static final EnumMap<Slot, String> nameSlot = new EnumMap<Slot, String>(Slot.class);
     
     static {
         final ResourceBundle names = ResourceBundle.getBundle("Internationalization.Accessory", mygame.RPG_1.currentLocale);
-        nameMap.put(Slot.RING,      names.getString("RING"));
-        nameMap.put(Slot.NECKLACE,  names.getString("NECKLACE"));
-        nameMap.put(Slot.BRACELET,  names.getString("BRACELET"));
+        nameSlot.put(Slot.RING,      names.getString("RING"));
+        nameSlot.put(Slot.NECKLACE,  names.getString("NECKLACE"));
+        nameSlot.put(Slot.BRACELET,  names.getString("BRACELET"));
+        
+        nameMat.put(Material.BONE,      names.getString("BONE"));
+        nameMat.put(Material.COPPER,    names.getString("COPPER"));
+        nameMat.put(Material.SILVER,    names.getString("SILVER"));
+        nameMat.put(Material.GOLD,      names.getString("GOLD"));
+        nameMat.put(Material.RUBY,      names.getString("RUBY"));
+        nameMat.put(Material.SAPPHIRE,  names.getString("SAPPHIRE"));
+        
     }
     
     public Accessory() {
-        this(Slot.getRandomSlot(), Quality.getRandomQuality());
+        this(Slot.getRandomSlot(), Material.getRandomSlot(),Quality.getRandomQuality());
     }
     
     public Accessory(final Slot slot) {
-        this(slot, Quality.getRandomQuality());
+        this(slot, Material.getRandomSlot(),Quality.getRandomQuality());
     }
     
     public Accessory(final Quality qual) {
-        this(Slot.getRandomSlot(), qual);
+        this(Slot.getRandomSlot(), Material.getRandomSlot(), qual);
+    }
+    
+    public Accessory(final Material mat) {
+        this(Slot.getRandomSlot(), mat, Quality.getRandomQuality());
+    }
+    
+    public Accessory(final Slot slot, final Material mat) {
+        this(slot, mat,Quality.getRandomQuality());
+    }
+    
+    public Accessory(final Material mat, final Quality qual) {
+        this(Slot.getRandomSlot(), mat, qual);
     }
     
     public Accessory(final Slot slot, final Quality qual) {
+        this(slot, Material.getRandomSlot(), qual);
+    }
+    
+    public Accessory(final Slot slot, final Material mat, final Quality qual) {
         this.slot = slot;
+        this.mat = mat;
         super.setQuality(qual);
-        super.setName(nameMap.get(slot));
+        super.setName(nameMat.get(mat) + nameSlot.get(slot));
         super.setDurability(qual, slot.getDurability());
-        super.setMagicAttributes(slot.getMaxMagicSlots(), qual);
+        super.setMagicAttributes(mat.getMaxMagicSlots(), qual);
     }
     
     public Slot getSlot() {
         return slot;
+    }
+    
+    public Material getMaterial() {
+        return mat;
     }
     
     @Override

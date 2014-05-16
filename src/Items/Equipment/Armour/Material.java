@@ -28,23 +28,23 @@ public enum Material {
         this.maxMagicSlots = maxMagicSlots;
     }
     
-    public final Weight getWeight() {
+    protected final Weight getWeight() {
         return weight;
     }
     
-    public final int getPhysicalValue() {
+    protected final int getPhysicalValue() {
         return physicalValue;
     }
     
-    public final int getMagicalValue() {
+    protected final int getMagicalValue() {
         return magicalValue;
     }
     
-    public final int getDurability() {
+    protected final int getDurability() {
         return durability;
     }
     
-    public final int getMaxMagicSlots() {
+    protected final int getMaxMagicSlots() {
         return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
     }
     

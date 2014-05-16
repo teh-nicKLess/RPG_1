@@ -12,7 +12,7 @@ public enum Slot {
         this.multiplier = multiplier;
     }
 
-    public final byte getMultiplier() { 
+    protected final byte getMultiplier() { 
         return multiplier; 
     }
     

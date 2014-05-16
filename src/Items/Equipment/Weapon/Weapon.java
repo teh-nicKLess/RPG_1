@@ -82,6 +82,10 @@ public final class Weapon extends Equipment {
         return range;
     }
     
+    public final boolean isTwoHanded() {
+        return type.isTwoHanded();
+    }
+    
     private int calculateDamage(final Quality qual, final int dmg) {
         final int max = dmg + damageBonus.get(qual);
         final int min = max / 2;

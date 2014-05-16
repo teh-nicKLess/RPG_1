@@ -34,35 +34,31 @@ public enum Type {
         this.maxMagicSlots = maxMagicSlots;
     }
     
-    public final boolean isTwoHanded() {
+    protected final boolean isTwoHanded() {
         return twoHands;
     }
     
-    public final int getBaseDamage() {
+    protected final int getBaseDamage() {
         return baseDamage;
     }
     
-    public final Weight getWeight() {
+    protected final Weight getWeight() {
         return weight;
     }
     
-    public final int getDurability() {
+    protected final int getDurability() {
         return durability;
     }
     
-    public final int getRange() {
+    protected final int getRange() {
         return range;
     }
     
-    public final int getMaxMagicSlots() {
+    protected final int getMaxMagicSlots() {
         return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
     }
     
     public static Type getRandomType() {
-        return Type.values()[Randomizer.getRandomNumber(Type.values().length)];
-    }
-    
-    public static Type getRandomMaterial() {
         return Type.values()[Randomizer.getRandomNumber(Type.values().length)];
     }
     

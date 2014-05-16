@@ -21,7 +21,7 @@ public enum Material {
     }
     
     
-    public final int getMaxMagicSlots() {
+    protected final int getMaxMagicSlots() {
         return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
     }
     

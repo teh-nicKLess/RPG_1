@@ -16,7 +16,7 @@ public enum MagicAttribute {
         this.maxStat = stat + 1;
     }
     
-    public final int getStat() {
+    protected final int getStat() {
         return maxStat;
     }
     

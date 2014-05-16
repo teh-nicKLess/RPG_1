@@ -1,5 +1,6 @@
 package mygame;
 
+import Items.Equipment.Accessory.Accessory;
 import Items.Equipment.Armour.Armour;
 import Items.Equipment.Weapon.Weapon;
 import com.jme3.app.SimpleApplication;
@@ -25,12 +26,15 @@ public class RPG_1 extends SimpleApplication {
         
         for (int i = 0; i < iterations; i++) {
             final Armour a = new Armour();
-            System.out.println(a);
-            //System.out.println(a.getName());
+            //System.out.println(a);
+            System.out.println(a.getName());
             
-            //final Weapon w = new Weapon();
+            final Weapon w = new Weapon();
             //System.out.println(w);
-            //System.out.println(w.getName());
+            System.out.println(w.getName());
+            
+            final Accessory ac = new Accessory();
+            System.out.println(ac.getName());
             
         }
                 

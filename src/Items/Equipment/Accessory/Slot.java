@@ -11,11 +11,11 @@ public enum Slot {
     private final short durability = 200;
     
     
-    public final int getDurability() {
+    protected final int getDurability() {
         return durability;
     }
     
-    public Weight getWeight() {
+    protected Weight getWeight() {
         return Weight.NULL;
     }
     

@@ -7,7 +7,7 @@ import java.util.EnumMap;
 import java.util.ResourceBundle;
 
 
-public abstract class Accessory extends Equipment {
+public class Accessory extends Equipment {
     
     private Slot slot;
     private static final EnumMap<Slot, String> nameMap = new EnumMap<Slot, String>(Slot.class);

@@ -15,11 +15,28 @@ public final class Armour extends Equipment {
     private final int magicalArmour;
     private final Slot slot;
     private final Material mat;
+    private final static EnumMap<Quality, Integer> physicalBonus = new EnumMap<Quality, Integer>(Quality.class);
+    private final static EnumMap<Quality, Integer> magicalBonus = new EnumMap<Quality, Integer>(Quality.class);    
     private final static EnumMap<Material, String> nameMat = new EnumMap<Material, String>(Material.class);
     private final static EnumMap<Weight, EnumMap<Slot, String>> nameSlot = new EnumMap<Weight, EnumMap<Slot, String>>(Weight.class);
     
     static {
-        ResourceBundle names = ResourceBundle.getBundle("Internationalization.Armour", mygame.RPG_1.currentLocale);
+        
+        physicalBonus.put(Quality.COMMON,       0);
+        physicalBonus.put(Quality.UNCOMMON,     5);
+        physicalBonus.put(Quality.RARE,         10);
+        physicalBonus.put(Quality.EPIC,         20);
+        physicalBonus.put(Quality.LEGENDARY,    25);
+        physicalBonus.put(Quality.UNIQUE,       physicalBonus.get(Quality.LEGENDARY));
+        
+        magicalBonus.put(Quality.COMMON,        0);
+        magicalBonus.put(Quality.UNCOMMON,      5);
+        magicalBonus.put(Quality.RARE,          10);
+        magicalBonus.put(Quality.EPIC,          20);
+        magicalBonus.put(Quality.LEGENDARY,     25);
+        magicalBonus.put(Quality.UNIQUE,        magicalBonus.get(Quality.LEGENDARY));
+        
+        final ResourceBundle names = ResourceBundle.getBundle("Internationalization.Armour", mygame.RPG_1.currentLocale);
         nameMat.put(Material.WOOL,      names.getString("WOOL"));
         nameMat.put(Material.SILK,      names.getString("SILK"));
         nameMat.put(Material.CHAINMAIL, names.getString("CHAINMAIL"));
@@ -81,11 +98,11 @@ public final class Armour extends Equipment {
         this(mat, Slot.getRandomSlot(), qual);
     }
     
-    public Armour(Material mat, Slot slot, Quality qual) {
+    public Armour(final Material mat, final Slot slot, final Quality qual) {
         this.mat = mat;
         this.slot = slot;
-        this.physicalArmour = this.calculatePhysicalArmor(slot, qual, mat.getBaseValue());
-        this.magicalArmour = this.calculateMagicalArmor(qual);
+        this.physicalArmour = this.calculatePhysicalArmor(slot, qual, mat.getPhysicalValue());
+        this.magicalArmour = this.calculateMagicalArmor(qual, mat.getMagicalValue());
         super.setQuality(qual);
         super.setDurability(qual, mat.getDurability());
         super.setName(nameMat.get(mat) + nameSlot.get(mat.getWeight()).get(slot));
@@ -93,7 +110,11 @@ public final class Armour extends Equipment {
     }
     
     public final int getPhysicalArmour() {
-        int value = magicalArmour;
+        return physicalArmour;
+    }
+    
+    public final int getTotalPhysicalArmour() {
+        int value = physicalArmour;
         final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
         if (magic.containsKey(MagicAttribute.ARMOUR)) {
             value += magic.get(MagicAttribute.ARMOUR);
@@ -105,6 +126,10 @@ public final class Armour extends Equipment {
     }
     
     public final int getMagicalArmour() {
+        return magicalArmour;
+    }
+    
+    public final int getTotalMagicalArmour() {
         int value = magicalArmour;
         final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
         if (magic.containsKey(MagicAttribute.SPELLRESISTANCE)) {
@@ -125,31 +150,14 @@ public final class Armour extends Equipment {
     }
     
     private int calculatePhysicalArmor(Slot slot, Quality qual, int armorValue) {
-        int max = armorValue * slot.getMultiplier();
-        switch (qual) {
-            case UNIQUE:
-            case LEGENDARY: max += 25; break;
-            case EPIC:      max += 20; break;
-            case RARE:      max += 15; break; 
-            case UNCOMMON:  max += 5;  break;
-            case COMMON:    max += 0;  break;
-            default:        assert false; max = 0;
-        }
+        final int max = (armorValue + physicalBonus.get(qual)) * slot.getMultiplier();
         final int min = max / 2;
         return min + Randomizer.getRandomNumber(((max - min) + 1));
     }
     
-    private int calculateMagicalArmor(Quality qual) {
-        final int value;
-        switch (qual) {
-            case UNIQUE:
-            case LEGENDARY: value = 25; break;
-            case EPIC:      value = 20; break;
-            case RARE:      value = 15; break; 
-            case UNCOMMON:  value = 5;  break;
-            case COMMON:    value = 0;  break;
-            default:        assert false; value = 0;
-        }
+    private int calculateMagicalArmor(Quality qual, int magicArmor) {
+        //TODO might want to do more / change stuff
+        final int value = magicalBonus.get(qual) + magicArmor;
         return value;
     }
     

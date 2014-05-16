@@ -5,32 +5,38 @@ import Utilities.Randomizer;
 
 public enum Material {
     
-    WOOL(       5,      100,    Weight.LIGHT,   4), 
-    SILK(       5,      100,    Weight.LIGHT,   4), 
-    LEATHER(    10,     150,    Weight.MEDIUM,  3), 
-    CHAINMAIL(  15,     150,    Weight.MEDIUM,  2), 
-    IRON(       20,     200,    Weight.HEAVY,   1), 
-    STEEL(      30,     200,    Weight.HEAVY,   0);
+    WOOL(       5,      20,     100,    Weight.LIGHT,   4), 
+    SILK(       5,      20,     100,    Weight.LIGHT,   4), 
+    LEATHER(    10,     15,     150,    Weight.MEDIUM,  3), 
+    CHAINMAIL(  15,     10,     150,    Weight.MEDIUM,  2), 
+    IRON(       20,     5,      200,    Weight.HEAVY,   1), 
+    STEEL(      30,     0,      200,    Weight.HEAVY,   0);
     
     
-    private final int baseValue;
+    private final int physicalValue;
+    private final int magicalValue;
     private final int durability;
     private final Weight weight;
     private final int maxMagicSlots;
     
-    private Material(int value, int durability, Weight weight, int maxMagicSlots) {
-        this.baseValue = value;
+    private Material(int physicalValue, int magicalValue, int durability, Weight weight, int maxMagicSlots) {
+        this.physicalValue = physicalValue;
+        this.magicalValue = magicalValue;
         this.durability = durability;
         this.weight = weight;
-        this.maxMagicSlots = maxMagicSlots + 1;
+        this.maxMagicSlots = maxMagicSlots;
     }
     
     public final Weight getWeight() {
         return weight;
     }
     
-    public final int getBaseValue() {
-        return baseValue;
+    public final int getPhysicalValue() {
+        return physicalValue;
+    }
+    
+    public final int getMagicalValue() {
+        return magicalValue;
     }
     
     public final int getDurability() {
@@ -38,7 +44,7 @@ public enum Material {
     }
     
     public final int getMaxMagicSlots() {
-        return maxMagicSlots;
+        return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
     }
     
     public static Material getRandomMaterial() {

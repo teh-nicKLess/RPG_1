@@ -14,10 +14,19 @@ public final class Weapon extends Equipment {
     private final int damage;
     private final Type type;
     private final int range;
+    private static final EnumMap<Quality, Integer> damageBonus = new EnumMap<Quality, Integer>(Quality.class);
     private static final EnumMap<Type, String> nameMap = new EnumMap<Type, String>(Type.class);
     
     static {
-        ResourceBundle names = ResourceBundle.getBundle("Internationalization.Weapon", mygame.RPG_1.currentLocale);
+        
+        damageBonus.put(Quality.COMMON,       0);
+        damageBonus.put(Quality.UNCOMMON,     5);
+        damageBonus.put(Quality.RARE,         10);
+        damageBonus.put(Quality.EPIC,         20);
+        damageBonus.put(Quality.LEGENDARY,    25);
+        damageBonus.put(Quality.UNIQUE,       damageBonus.get(Quality.LEGENDARY));
+        
+        final ResourceBundle names = ResourceBundle.getBundle("Internationalization.Weapon", mygame.RPG_1.currentLocale);
         nameMap.put(Type.BOW,       names.getString("BOW"));
         nameMap.put(Type.CROSSBOW,  names.getString("CROSSBOW"));
         nameMap.put(Type.AXE,       names.getString("AXE"));
@@ -50,17 +59,7 @@ public final class Weapon extends Equipment {
         super.setDurability(qual, type.getDurability());
         this.range = type.getRange();
         super.setName(nameMap.get(type));
-        final int magicSlots;
-        switch (qual) {
-            case UNIQUE:
-            case LEGENDARY: magicSlots = 2;     break;
-            case EPIC:      
-            case RARE:      magicSlots = 1;     break;
-            case UNCOMMON:  
-            case COMMON:    magicSlots = 0;     break;
-            default:        assert false; magicSlots = 0;
-        }
-        super.setMagicAttributes(magicSlots, qual);
+        super.setMagicAttributes(type.getMaxMagicSlots(), qual);
     }
     
     public final int getDamage() {
@@ -84,16 +83,7 @@ public final class Weapon extends Equipment {
     }
     
     private int calculateDamage(Quality qual, int dmg) {
-        final int max;
-        switch (qual) {
-            case UNIQUE:
-            case LEGENDARY: max = dmg;     break;
-            case EPIC:      max = dmg;     break;
-            case RARE:      max = dmg;     break;
-            case UNCOMMON:  max = dmg;     break;
-            case COMMON:    max = dmg;     break;
-            default:        assert false; max = 0;
-        }
+        final int max = dmg + damageBonus.get(qual);
         final int min = max / 2;
         return min + Randomizer.getRandomNumber(((max - min) + 1));
     }

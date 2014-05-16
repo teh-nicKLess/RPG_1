@@ -57,7 +57,7 @@ public abstract class Equipment extends Items {
             final int min = durability / 2;
             
             maxDurability = min + Randomizer.getRandomNumber(((durability - min) + 1));
-            currentDurability = (int)(Math.max(0.5f * maxDurability, Randomizer.getRandomNumber(maxDurability + 1)));
+            currentDurability = (int)(Math.max(maxDurability / 2, Randomizer.getRandomNumber(maxDurability + 1)));
         }
     }
     

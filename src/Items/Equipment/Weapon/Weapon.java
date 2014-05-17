@@ -14,11 +14,13 @@ public final class Weapon extends Equipment {
     private final int damage;
     private final Type type;
     private final int range;
+    //Holds the damageBonus values, depending on the item quality
     private static final EnumMap<Quality, Integer> damageBonus = new EnumMap<Quality, Integer>(Quality.class);
+    //Holds all the weapon types names
     private static final EnumMap<Type, String> nameMap = new EnumMap<Type, String>(Type.class);
     
     static {
-        
+        //Enter the damageBonus values into the enumMap
         damageBonus.put(Quality.COMMON,       0);
         damageBonus.put(Quality.UNCOMMON,     5);
         damageBonus.put(Quality.RARE,         10);
@@ -26,6 +28,7 @@ public final class Weapon extends Equipment {
         damageBonus.put(Quality.LEGENDARY,    25);
         damageBonus.put(Quality.UNIQUE,       damageBonus.get(Quality.LEGENDARY));
         
+        //Fill both enumMaps with the name parts of the currentLocale
         final ResourceBundle names = ResourceBundle.getBundle("Internationalization.Weapon", mygame.RPG_1.currentLocale);
         nameMap.put(Type.BOW,       names.getString("BOW"));
         nameMap.put(Type.CROSSBOW,  names.getString("CROSSBOW"));
@@ -40,18 +43,34 @@ public final class Weapon extends Equipment {
         nameMap.put(Type.STAFF,     names.getString("STAFF"));
     }
     
+    /**
+     * Get a completly random Weapon
+     */
     public Weapon() {
         this(Type.getRandomType(), Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Weapon with a given Type
+     * @param type to assign to the Weapon
+     */
     public Weapon(final Type type) {
         this(type, Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Weapon with a given Quality
+     * @param qual to assign to the Weapon
+     */
     public Weapon(final Quality qual) {
         this(Type.getRandomType(), qual);
     }
-        
+    
+    /**
+     * Get a random Weapon with a given Type and Quality
+     * @param type to assign to the Weapon
+     * @param qual to assign to the Weapon 
+     */
     public Weapon(final Type type, final Quality qual) {
         this.type = type;
         super.setQuality(qual);
@@ -62,7 +81,19 @@ public final class Weapon extends Equipment {
         super.setMagicAttributes(type.getMaxMagicSlots(), qual);
     }
     
+    /**
+     * returns the weapon's raw damage
+     * @return the weapon's raw damage
+     */
     public final int getDamage() {
+        return damage;
+    } 
+    
+    /**
+     * returns the weapons total damage (raw + magic bonus)
+     * @return the weapons total damage (raw + magic bonus) 
+     */
+    public final int getTotalDamage() {
         int value = damage;
         final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
         if (magic.containsKey(MagicAttribute.WEAPONDAMAGE)) {
@@ -72,24 +103,41 @@ public final class Weapon extends Equipment {
             value += magic.get(MagicAttribute.DAMAGE);
         }
         return value;
-    } 
+    }
     
+    /**
+     * returns the weapon's type
+     * @return the weapon's type 
+     */
     public final Type getType() {
         return type;
     }
     
+    /**
+     * returns the weapon's range
+     * @return the weapon's range 
+     */
     public final int getRange() {
         return range;
     }
     
+    /**
+     * returns true if the weapon is two handed 
+     * @return true if the weapon is two handed
+     */
     public final boolean isTwoHanded() {
         return type.isTwoHanded();
     }
     
+    /*
+     * calculates the weapon's random raw damage
+     * weapon base value + quality Bonus is the upper bound
+     * half that value is the lower round
+     */
     private int calculateDamage(final Quality qual, final int dmg) {
         final int max = dmg + damageBonus.get(qual);
         final int min = max / 2;
-        return min + Randomizer.getRandomNumber(((max - min) + 1));
+        return min + Randomizer.getRandomNumberNIncluded((max - min));
     }
     
     @Override
@@ -97,11 +145,20 @@ public final class Weapon extends Equipment {
         return "Range: " + range + "; Type: " + type + "; Quality: " + super.getQuality() + "; Damage: " + damage;
     }
 
+    /**
+     * returns the object's weight
+     * @return the object's weight 
+     */
     @Override
     public final Weight getWeight() {
         return type.getWeight();
     }
     
+    /**
+     * If you wish to define every single attribute of the Weapon
+     * the Builder class is your friend. Make sure you set every 
+     * attribute before you call build().
+     */
     public static class Builder {
         private int damage;
         private Type type;
@@ -119,6 +176,17 @@ public final class Weapon extends Equipment {
         public Builder quality(final Quality qual){this.qual = qual; return this; }
         public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
         public Builder durability(final int durability){this.durability = durability; return this; }
+        /**
+         * Sets the Weapon's name. Can be either a Name on it's own like "Mjölnir" 
+         * -> set both booleans to false
+         * Or you may use the internationalization files: translation = true. 
+         * If the name is unique, unique must be set true.
+         * @param name the String to set / lookup
+         * @param translation set true if you wish to use the internationalization files
+         * @param unique set true if the name to look up is in the UniqueItemNames file, 
+         *              false: default Weapon file will be used
+         * @return the builder object itself.
+         */
         public Builder name(final String name, final boolean translation, final boolean unique) {
             this.name = name; 
             this.translation = translation; 
@@ -126,12 +194,19 @@ public final class Weapon extends Equipment {
             return this; 
         }
         
-        
+        /**
+         * Completes the Builder object to get the Weapon object
+         * @return Weapon with the set attributes
+         */
         public Weapon build() {
             return new Weapon(this);
         }
     }
     
+    /**
+     * Only called by the Builder.build() process
+     * @param builder containing the information for the Weapon
+     */
     private Weapon(final Builder builder) {
         this.damage = builder.damage;
         this.range = builder.range;

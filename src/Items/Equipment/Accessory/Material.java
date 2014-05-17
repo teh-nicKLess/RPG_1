@@ -20,11 +20,18 @@ public enum Material {
         this.maxMagicSlots = maxMagicSlots;
     }
     
-    
+    /**
+     * returns the maxMagicSlots
+     * @return the maxMagicSlots
+     */
     protected final int getMaxMagicSlots() {
-        return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
+        return maxMagicSlots;
     }
     
+    /**
+     * returns a random Material
+     * @return a random Material
+     */
     public static Material getRandomSlot() {
         return Material.values()[Randomizer.getRandomNumber(Material.values().length)];
     }

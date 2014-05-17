@@ -13,13 +13,21 @@ public enum MagicAttribute {
     private final int maxStat;
     
     private MagicAttribute(final int stat) {
-        this.maxStat = stat + 1;
+        this.maxStat = stat;
     }
     
+    /**
+     * returns the base value of that magic
+     * @return the base value of that magic
+     */
     protected final int getStat() {
         return maxStat;
     }
     
+    /**
+     * returns a random Magic Attribute
+     * @return a random Magic Attribute 
+     */
     public static MagicAttribute getRandomMagic() {
         return MagicAttribute.values()[Randomizer.getRandomNumber(MagicAttribute.values().length)]; 
     }

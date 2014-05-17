@@ -28,26 +28,50 @@ public enum Material {
         this.maxMagicSlots = maxMagicSlots;
     }
     
+    /**
+     * returns the material's weight
+     * @return the material's weight 
+     */
     protected final Weight getWeight() {
         return weight;
     }
     
+    /**
+     * returns the material's base physical armour value
+     * @return the material's base physical armour value 
+     */
     protected final int getPhysicalValue() {
         return physicalValue;
     }
     
+    /**
+     * returns the material's base magical armour value
+     * @return the material's base magical armour value 
+     */
     protected final int getMagicalValue() {
         return magicalValue;
     }
     
+    /**
+     * returns the material's base durability value
+     * @return the material's base durability value
+     */
     protected final int getDurability() {
         return durability;
     }
     
+    /**
+     * returns the material's maxímum allowed magical attribute slots
+     * @return the material's maxímum allowed magical attribute slots
+     */
     protected final int getMaxMagicSlots() {
-        return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
+        return maxMagicSlots;
     }
     
+    /**
+     * returns a random Material
+     * @return a random Material
+     */
     public static Material getRandomMaterial() {
         return Material.values()[Randomizer.getRandomNumber(Material.values().length)];
     } 

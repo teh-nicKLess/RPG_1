@@ -14,7 +14,6 @@ public abstract class Equipment extends Items {
     private final static EnumMap<Quality, Integer> magicQBonus = new EnumMap<Quality, Integer>(Quality.class);
     
     static {
-        
         magicQBonus.put(Quality.COMMON,      0);
         magicQBonus.put(Quality.UNCOMMON,    5);
         magicQBonus.put(Quality.RARE,        10);
@@ -95,7 +94,7 @@ public abstract class Equipment extends Items {
         this.magic = magicMap;
     }
     
-    protected void setMagicAttributes(EnumMap<MagicAttribute, Integer> magic) {
+    protected void setBuilderMagicAttributes(final EnumMap<MagicAttribute, Integer> magic) {
         this.magic = magic;
     }
     

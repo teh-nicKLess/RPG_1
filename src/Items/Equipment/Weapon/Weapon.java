@@ -111,27 +111,27 @@ public final class Weapon extends Equipment {
         private int durability;
         private EnumMap<MagicAttribute, Integer> magic;
         
-        public Builder damage(int damage){this.damage = damage; return this; }
-        public Builder type(Type type){this.type = type; return this; }
-        public Builder range(int range){this.range = range; return this; }
-        public Builder name(String name){this.name = name; return this; }
-        public Builder quality(Quality qual){this.qual = qual; return this; }
-        public Builder magic(MagicAttribute magicAttribute, int value){this.magic.put(magicAttribute, value); return this; }
-        public Builder durability(int durability){this.durability = durability; return this; }
+        public Builder damage(final int damage){this.damage = damage; return this; }
+        public Builder type(final Type type){this.type = type; return this; }
+        public Builder range(final int range){this.range = range; return this; }
+        public Builder name(final String name){this.name = name; return this; }
+        public Builder quality(final Quality qual){this.qual = qual; return this; }
+        public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
+        public Builder durability(final int durability){this.durability = durability; return this; }
         
         public Weapon build() {
             return new Weapon(this);
         }
     }
     
-    private Weapon(Builder builder) {
+    private Weapon(final Builder builder) {
         this.damage = builder.damage;
         this.range = builder.range;
         this.type = builder.type;
         super.setName(builder.name);
         super.setBuilderDurability(builder.durability);
         super.setQuality(builder.qual);
-        super.setMagicAttributes(builder.magic);
+        super.setBuilderMagicAttributes(builder.magic);
     }
 
 }

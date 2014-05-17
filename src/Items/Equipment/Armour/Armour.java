@@ -180,21 +180,21 @@ public final class Armour extends Equipment {
         private int durability;
         private EnumMap<MagicAttribute, Integer> magic;
         
-        public Builder physicalArmour(int physicalArmour){this.physicalArmour = physicalArmour; return this; }
-        public Builder magicalArmour(int magicalArmour){this.magicalArmour = magicalArmour; return this; }
-        public Builder slot(Slot slot){this.slot = slot; return this; }
-        public Builder material(Material mat){this.mat = mat; return this; }
-        public Builder name(String name){this.name = name; return this; }
-        public Builder quality(Quality qual){this.qual = qual; return this; }
-        public Builder magic(MagicAttribute magicAttribute, int value){this.magic.put(magicAttribute, value); return this; }
-        public Builder durability(int durability){this.durability = durability; return this; }
+        public Builder physicalArmour(final int physicalArmour){this.physicalArmour = physicalArmour; return this; }
+        public Builder magicalArmour(final int magicalArmour){this.magicalArmour = magicalArmour; return this; }
+        public Builder slot(final Slot slot){this.slot = slot; return this; }
+        public Builder material(final Material mat){this.mat = mat; return this; }
+        public Builder name(final String name){this.name = name; return this; }
+        public Builder quality(final Quality qual){this.qual = qual; return this; }
+        public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
+        public Builder durability(final int durability){this.durability = durability; return this; }
         
         public Armour build() {
             return new Armour(this);
         }
     }
     
-    private Armour(Builder builder) {
+    private Armour(final Builder builder) {
         this.physicalArmour = builder.physicalArmour;
         this.magicalArmour = builder.magicalArmour;
         this.slot = builder.slot;
@@ -202,7 +202,7 @@ public final class Armour extends Equipment {
         super.setName(builder.name);
         super.setBuilderDurability(builder.durability);
         super.setQuality(builder.qual);
-        super.setMagicAttributes(builder.magic);
+        super.setBuilderMagicAttributes(builder.magic);
     }
     
 }

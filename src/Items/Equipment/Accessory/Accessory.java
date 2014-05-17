@@ -87,25 +87,25 @@ public class Accessory extends Equipment {
         private int durability;
         private EnumMap<MagicAttribute, Integer> magic;
         
-        public Builder material(Material mat){this.mat = mat; return this; }
-        public Builder slot(Slot slot){this.slot = slot; return this; }
-        public Builder name(String name){this.name = name; return this; }
-        public Builder quality(Quality qual){this.qual = qual; return this; }
-        public Builder magic(MagicAttribute magicAttribute, int value){this.magic.put(magicAttribute, value); return this; }
-        public Builder durability(int durability){this.durability = durability; return this; }
+        public Builder material(final Material mat){this.mat = mat; return this; }
+        public Builder slot(final Slot slot){this.slot = slot; return this; }
+        public Builder name(final String name){this.name = name; return this; }
+        public Builder quality(final Quality qual){this.qual = qual; return this; }
+        public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
+        public Builder durability(final int durability){this.durability = durability; return this; }
         
         public Accessory build() {
             return new Accessory(this);
         }
     }
     
-    private Accessory(Builder builder) {
+    private Accessory(final Builder builder) {
         this.slot = builder.slot;
         this.mat = builder.mat;
         super.setName(builder.name);
         super.setBuilderDurability(builder.durability);
         super.setQuality(builder.qual);
-        super.setMagicAttributes(builder.magic);
+        super.setBuilderMagicAttributes(builder.magic);
     }
     
 }

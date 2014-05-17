@@ -13,7 +13,7 @@ public final class Armour extends Equipment {
     
     private final int physicalArmour;
     private final int magicalArmour;
-    private final Slot slot;
+    private final Bodypart bodypart;
     private final Material mat;
     //Map which hold the physical armour bonus linked to it's quality
     private final static EnumMap<Quality, Integer> physicalBonus = new EnumMap<Quality, Integer>(Quality.class);
@@ -21,8 +21,8 @@ public final class Armour extends Equipment {
     private final static EnumMap<Quality, Integer> magicalBonus = new EnumMap<Quality, Integer>(Quality.class);
     //Map holding the material part names
     private final static EnumMap<Material, String> nameMat = new EnumMap<Material, String>(Material.class);
-    //Double Map holding the slot part names, linked to the weight
-    private final static EnumMap<Weight, EnumMap<Slot, String>> nameSlot = new EnumMap<Weight, EnumMap<Slot, String>>(Weight.class);
+    //Double Map holding the Bodypart part names, linked to the weight
+    private final static EnumMap<Weight, EnumMap<Bodypart, String>> nameBodypart = new EnumMap<Weight, EnumMap<Bodypart, String>>(Weight.class);
     
     static {
         //Filling in physical armour bonus values
@@ -49,37 +49,37 @@ public final class Armour extends Equipment {
         nameMat.put(Material.IRON,      names.getString("IRON"));
         nameMat.put(Material.STEEL,     names.getString("STEEL"));
         
-        EnumMap<Slot, String> nameSlotLight = new EnumMap<Slot, String>(Slot.class);
-        nameSlotLight.put(Slot.HANDS,   names.getString("HANDS_light"));
-        nameSlotLight.put(Slot.FEET,    names.getString("FEET_light"));
-        nameSlotLight.put(Slot.LEGS,    names.getString("LEGS_light"));
-        nameSlotLight.put(Slot.HEAD,    names.getString("HEAD_light"));
-        nameSlotLight.put(Slot.TORSO,   names.getString("TORSO_light"));
+        EnumMap<Bodypart, String> nameSlotLight = new EnumMap<Bodypart, String>(Bodypart.class);
+        nameSlotLight.put(Bodypart.HANDS,   names.getString("HANDS_light"));
+        nameSlotLight.put(Bodypart.FEET,    names.getString("FEET_light"));
+        nameSlotLight.put(Bodypart.LEGS,    names.getString("LEGS_light"));
+        nameSlotLight.put(Bodypart.HEAD,    names.getString("HEAD_light"));
+        nameSlotLight.put(Bodypart.TORSO,   names.getString("TORSO_light"));
         
-        EnumMap<Slot, String> nameSlotMedium = new EnumMap<Slot, String>(Slot.class);
-        nameSlotMedium.put(Slot.HANDS,  names.getString("HANDS_medium"));
-        nameSlotMedium.put(Slot.FEET,   names.getString("FEET_medium"));
-        nameSlotMedium.put(Slot.LEGS,   names.getString("LEGS_medium"));
-        nameSlotMedium.put(Slot.HEAD,   names.getString("HEAD_medium"));
-        nameSlotMedium.put(Slot.TORSO,  names.getString("TORSO_medium"));
+        EnumMap<Bodypart, String> nameSlotMedium = new EnumMap<Bodypart, String>(Bodypart.class);
+        nameSlotMedium.put(Bodypart.HANDS,  names.getString("HANDS_medium"));
+        nameSlotMedium.put(Bodypart.FEET,   names.getString("FEET_medium"));
+        nameSlotMedium.put(Bodypart.LEGS,   names.getString("LEGS_medium"));
+        nameSlotMedium.put(Bodypart.HEAD,   names.getString("HEAD_medium"));
+        nameSlotMedium.put(Bodypart.TORSO,  names.getString("TORSO_medium"));
         
-        EnumMap<Slot, String> nameSlotHeavy = new EnumMap<Slot, String>(Slot.class);
-        nameSlotHeavy.put(Slot.HANDS,   names.getString("HANDS_heavy"));
-        nameSlotHeavy.put(Slot.FEET,    names.getString("FEET_heavy"));
-        nameSlotHeavy.put(Slot.LEGS,    names.getString("LEGS_heavy"));
-        nameSlotHeavy.put(Slot.HEAD,    names.getString("HEAD_heavy"));
-        nameSlotHeavy.put(Slot.TORSO,   names.getString("TORSO_heavy"));
+        EnumMap<Bodypart, String> nameSlotHeavy = new EnumMap<Bodypart, String>(Bodypart.class);
+        nameSlotHeavy.put(Bodypart.HANDS,   names.getString("HANDS_heavy"));
+        nameSlotHeavy.put(Bodypart.FEET,    names.getString("FEET_heavy"));
+        nameSlotHeavy.put(Bodypart.LEGS,    names.getString("LEGS_heavy"));
+        nameSlotHeavy.put(Bodypart.HEAD,    names.getString("HEAD_heavy"));
+        nameSlotHeavy.put(Bodypart.TORSO,   names.getString("TORSO_heavy"));
         
-        nameSlot.put(Weight.HEAVY, nameSlotHeavy);
-        nameSlot.put(Weight.MEDIUM, nameSlotMedium);
-        nameSlot.put(Weight.LIGHT, nameSlotLight);
+        nameBodypart.put(Weight.HEAVY, nameSlotHeavy);
+        nameBodypart.put(Weight.MEDIUM, nameSlotMedium);
+        nameBodypart.put(Weight.LIGHT, nameSlotLight);
     }
     
     /**
      * Get a completly random Armour
      */
     public Armour() {
-        this(Material.getRandomMaterial(), Slot.getRandomSlot(), Quality.getRandomQuality());
+        this(Material.getRandomMaterial(), Bodypart.getRandomBodypart(), Quality.getRandomQuality());
     }
     
     /**
@@ -87,15 +87,15 @@ public final class Armour extends Equipment {
      * @param mat to assign to the Armour
      */
     public Armour(final Material mat) {
-        this(mat, Slot.getRandomSlot(), Quality.getRandomQuality());
+        this(mat, Bodypart.getRandomBodypart(), Quality.getRandomQuality());
     }
     
     /**
-     * Get a random Armour with a given Slot
-     * @param slot to assign to the Armour
+     * Get a random Armour with a given Bodypart
+     * @param bodypart to assign to the Armour
      */
-    public Armour(final Slot slot) {
-        this(Material.getRandomMaterial(), slot, Quality.getRandomQuality());
+    public Armour(final Bodypart bp) {
+        this(Material.getRandomMaterial(), bp, Quality.getRandomQuality());
     }
     
     /**
@@ -103,25 +103,25 @@ public final class Armour extends Equipment {
      * @param qual to assign to the Armour
      */
     public Armour(final Quality qual) {
-        this(Material.getRandomMaterial(), Slot.getRandomSlot(), qual);
+        this(Material.getRandomMaterial(), Bodypart.getRandomBodypart(), qual);
     }
     
     /**
-     * Get a random Armour with a given Material and Slot
+     * Get a random Armour with a given Material and Bodypart
      * @param mat to assign to the Armour
-     * @param slot to assign to the Armour
+     * @param bodypart to assign to the Armour
      */
-    public Armour(final Material mat, final Slot slot) {
-        this(mat, slot, Quality.getRandomQuality());
+    public Armour(final Material mat, final Bodypart bp) {
+        this(mat, bp, Quality.getRandomQuality());
     }
     
     /**
-     * Get a random Armour with a given Slot and Quality
-     * @param slot to assign to the Armour
+     * Get a random Armour with a given Bodypart and Quality
+     * @param bodypart to assign to the Armour
      * @param qual to assign to the Armour
      */
-    public Armour(final Slot slot, final Quality qual) {
-        this(Material.getRandomMaterial(), slot, qual);
+    public Armour(final Bodypart bp, final Quality qual) {
+        this(Material.getRandomMaterial(), bp, qual);
     }
     
     /**
@@ -130,23 +130,23 @@ public final class Armour extends Equipment {
      * @param qual to assign to the Armour
      */
     public Armour(final Material mat, final Quality qual) {
-        this(mat, Slot.getRandomSlot(), qual);
+        this(mat, Bodypart.getRandomBodypart(), qual);
     }
     
     /**
-     * Get a random Armour with a given Material, Slot and Quality
+     * Get a random Armour with a given Material, Bodypart and Quality
      * @param mat to assign to the Armour
-     * @param slot to assign to the Armour
+     * @param bodypart to assign to the Armour
      * @param qual to assign to the Armour
      */
-    public Armour(final Material mat, final Slot slot, final Quality qual) {
+    public Armour(final Material mat, final Bodypart bp, final Quality qual) {
         this.mat = mat;
-        this.slot = slot;
-        this.physicalArmour = this.calculatePhysicalArmor(slot, qual, mat.getPhysicalValue());
+        this.bodypart = bp;
+        this.physicalArmour = this.calculatePhysicalArmor(bp, qual, mat.getPhysicalValue());
         this.magicalArmour = this.calculateMagicalArmor(qual, mat.getMagicalValue());
         super.setQuality(qual);
         super.setDurability(mat.getDurability());
-        super.setName(nameMat.get(mat) + nameSlot.get(mat.getWeight()).get(slot));
+        super.setName(nameMat.get(mat) + nameBodypart.get(mat.getWeight()).get(bp));
         super.setMagicAttributes(mat.getMaxMagicSlots(), qual);
     }
     
@@ -199,11 +199,11 @@ public final class Armour extends Equipment {
     }
     
     /**
-     * returns the armour's slot
-     * @return the armour's slot 
+     * returns the armour's bodypart
+     * @return the armour's bodypart 
      */
-    public final Slot getSlot() {
-        return slot;
+    public final Bodypart getBodypart() {
+        return bodypart;
     }
     
     /**
@@ -216,11 +216,11 @@ public final class Armour extends Equipment {
     
     /*
      * calculates the armour's random raw physical armour value
-     * (material base value + quality Bonus) * multiplier defined by slot is the upper bound
+     * (material base value + quality Bonus) * multiplier defined by bodypart is the upper bound
      * half that value is the lower round
      */
-    private int calculatePhysicalArmor(final Slot slot, final Quality qual, final int armorValue) {
-        final int max = (armorValue + physicalBonus.get(qual)) * slot.getMultiplier();
+    private int calculatePhysicalArmor(final Bodypart bp, final Quality qual, final int armorValue) {
+        final int max = (armorValue + physicalBonus.get(qual)) * bp.getMultiplier();
         final int min = max / 2;
         return min + Randomizer.getRandomNumberNIncluded(max - min);
     }
@@ -246,7 +246,7 @@ public final class Armour extends Equipment {
         sb.append("TOTAL Physical Armour: "); sb.append(this.getTotalPhysicalArmour()); sb.append("\n");
         sb.append("Magical Armour: "); sb.append(this.getMagicalArmour()); sb.append("\n");
         sb.append("TOTAL Magical Armour: "); sb.append(this.getTotalMagicalArmour()); sb.append("\n");
-        sb.append("Slot: "); sb.append(this.getSlot()); sb.append("\n");
+        sb.append("Bodypart: "); sb.append(this.getBodypart()); sb.append("\n");
         sb.append("Material: "); sb.append(this.getMaterial()); sb.append("\n");
         return sb.toString();
     }
@@ -268,7 +268,7 @@ public final class Armour extends Equipment {
     public static class Builder {
         private int physicalArmour;
         private int magicalArmour;
-        private Slot slot;
+        private Bodypart bodypart;
         private Material mat;
         private String name;
         private boolean translation;
@@ -279,7 +279,7 @@ public final class Armour extends Equipment {
         
         public Builder physicalArmour(final int physicalArmour){this.physicalArmour = physicalArmour; return this; }
         public Builder magicalArmour(final int magicalArmour){this.magicalArmour = magicalArmour; return this; }
-        public Builder slot(final Slot slot){this.slot = slot; return this; }
+        public Builder bodypart(final Bodypart bp){this.bodypart = bp; return this; }
         public Builder material(final Material mat){this.mat = mat; return this; }
         public Builder quality(final Quality qual){this.qual = qual; return this; }
         public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
@@ -318,7 +318,7 @@ public final class Armour extends Equipment {
     private Armour(final Builder builder) {
         this.physicalArmour = builder.physicalArmour;
         this.magicalArmour = builder.magicalArmour;
-        this.slot = builder.slot;
+        this.bodypart = builder.bodypart;
         this.mat = builder.mat;
         super.setBuilderDurability(builder.durability);
         super.setQuality(builder.qual);

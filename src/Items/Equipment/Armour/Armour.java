@@ -15,13 +15,17 @@ public final class Armour extends Equipment {
     private final int magicalArmour;
     private final Slot slot;
     private final Material mat;
+    //Map which hold the physical armour bonus linked to it's quality
     private final static EnumMap<Quality, Integer> physicalBonus = new EnumMap<Quality, Integer>(Quality.class);
-    private final static EnumMap<Quality, Integer> magicalBonus = new EnumMap<Quality, Integer>(Quality.class);    
+    //Map which hold the magical armour bonus linked to it's quality
+    private final static EnumMap<Quality, Integer> magicalBonus = new EnumMap<Quality, Integer>(Quality.class);
+    //Map holding the material part names
     private final static EnumMap<Material, String> nameMat = new EnumMap<Material, String>(Material.class);
+    //Double Map holding the slot part names, linked to the weight
     private final static EnumMap<Weight, EnumMap<Slot, String>> nameSlot = new EnumMap<Weight, EnumMap<Slot, String>>(Weight.class);
     
     static {
-        
+        //Filling in physical armour bonus values
         physicalBonus.put(Quality.COMMON,       0);
         physicalBonus.put(Quality.UNCOMMON,     5);
         physicalBonus.put(Quality.RARE,         10);
@@ -29,6 +33,7 @@ public final class Armour extends Equipment {
         physicalBonus.put(Quality.LEGENDARY,    25);
         physicalBonus.put(Quality.UNIQUE,       physicalBonus.get(Quality.LEGENDARY));
         
+        //Filling in magical armour bonus values
         magicalBonus.put(Quality.COMMON,        0);
         magicalBonus.put(Quality.UNCOMMON,      5);
         magicalBonus.put(Quality.RARE,          10);
@@ -70,34 +75,70 @@ public final class Armour extends Equipment {
         nameSlot.put(Weight.LIGHT, nameSlotLight);
     }
     
+    /**
+     * Get a completly random Armour
+     */
     public Armour() {
         this(Material.getRandomMaterial(), Slot.getRandomSlot(), Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Armour with a given Material
+     * @param mat to assign to the Armour
+     */
     public Armour(final Material mat) {
         this(mat, Slot.getRandomSlot(), Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Armour with a given Slot
+     * @param slot to assign to the Armour
+     */
     public Armour(final Slot slot) {
         this(Material.getRandomMaterial(), slot, Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Armour with a given Quality
+     * @param qual to assign to the Armour
+     */
     public Armour(final Quality qual) {
         this(Material.getRandomMaterial(), Slot.getRandomSlot(), qual);
     }
     
+    /**
+     * Get a random Armour with a given Material and Slot
+     * @param mat to assign to the Armour
+     * @param slot to assign to the Armour
+     */
     public Armour(final Material mat, final Slot slot) {
         this(mat, slot, Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Armour with a given Slot and Quality
+     * @param slot to assign to the Armour
+     * @param qual to assign to the Armour
+     */
     public Armour(final Slot slot, final Quality qual) {
         this(Material.getRandomMaterial(), slot, qual);
     }
     
+    /**
+     * Get a random Armour with a given Material and Quality
+     * @param mat to assign to the Armour
+     * @param qual to assign to the Armour
+     */
     public Armour(final Material mat, final Quality qual) {
         this(mat, Slot.getRandomSlot(), qual);
     }
     
+    /**
+     * Get a random Armour with a given Material, Slot and Quality
+     * @param mat to assign to the Armour
+     * @param slot to assign to the Armour
+     * @param qual to assign to the Armour
+     */
     public Armour(final Material mat, final Slot slot, final Quality qual) {
         this.mat = mat;
         this.slot = slot;
@@ -109,10 +150,18 @@ public final class Armour extends Equipment {
         super.setMagicAttributes(mat.getMaxMagicSlots(), qual);
     }
     
+    /**
+     * returns the raw physical armour value
+     * @return the raw physical armour value
+     */
     public final int getPhysicalArmour() {
         return physicalArmour;
     }
     
+    /**
+     * returns the total physical armour (base value + magical upgrades)
+     * @return the total physical armour (base value + magical upgrades) 
+     */
     public final int getTotalPhysicalArmour() {
         int value = physicalArmour;
         final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
@@ -125,10 +174,18 @@ public final class Armour extends Equipment {
         return value;
     }
     
+    /**
+     * returns the raw magical armour value
+     * @return the raw magical armour value
+     */
     public final int getMagicalArmour() {
         return magicalArmour;
     }
     
+    /**
+     * returns the total magical armour (base value + magical upgrades)
+     * @return the total magical armour (base value + magical upgrades) 
+     */
     public final int getTotalMagicalArmour() {
         int value = magicalArmour;
         final EnumMap<MagicAttribute, Integer> magic = super.getMagicAttributes();
@@ -141,20 +198,37 @@ public final class Armour extends Equipment {
         return value;        
     }
     
+    /**
+     * returns the armour's slot
+     * @return the armour's slot 
+     */
     public final Slot getSlot() {
         return slot;
     }
     
+    /**
+     * returns the armour's Material
+     * @return the armour's Material 
+     */
     public final Material getMaterial() {
         return mat;
     }
     
+    /*
+     * calculates the armour's random raw physical armour value
+     * (material base value + quality Bonus) * multiplier defined by slot is the upper bound
+     * half that value is the lower round
+     */
     private int calculatePhysicalArmor(final Slot slot, final Quality qual, final int armorValue) {
         final int max = (armorValue + physicalBonus.get(qual)) * slot.getMultiplier();
         final int min = max / 2;
-        return min + Randomizer.getRandomNumber(((max - min) + 1));
+        return min + Randomizer.getRandomNumberNIncluded(max - min);
     }
     
+    /*
+     * calculates the armour's random raw magical armour value
+     * Sum of material base magic armour and magic bonus = end value
+     */
     private int calculateMagicalArmor(final Quality qual, final int magicArmor) {
         //TODO might want to do more / change stuff
         return magicArmor + magicalBonus.get(qual);
@@ -165,11 +239,20 @@ public final class Armour extends Equipment {
         return "Slot: " + slot + "; Material: " + mat + "; Quality: " + super.getQuality() + "; Armour: " + physicalArmour;
     }
 
+    /**
+     * returns the object's weight
+     * @return the object's weight 
+     */
     @Override
     public final Weight getWeight() {
         return mat.getWeight();
     }
     
+    /**
+     * If you wish to define every single attribute of the Armour
+     * the Builder class is your friend. Make sure you set every 
+     * attribute before you call build().
+     */
     public static class Builder {
         private int physicalArmour;
         private int magicalArmour;
@@ -189,6 +272,17 @@ public final class Armour extends Equipment {
         public Builder quality(final Quality qual){this.qual = qual; return this; }
         public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
         public Builder durability(final int durability){this.durability = durability; return this; }
+        /**
+         * Sets the Armour's name. Can be either a Name on it's own like "Mjölnir" 
+         * -> set both booleans to false
+         * Or you may use the internationalization files: translation = true. 
+         * If the name is unique, unique must be set true.
+         * @param name the String to set / lookup
+         * @param translation set true if you wish to use the internationalization files
+         * @param unique set true if the name to look up is in the UniqueItemNames file, 
+         *              false: default Armour file will be used
+         * @return the builder object itself.
+         */
         public Builder name(final String name, final boolean translation, final boolean unique) {
             this.name = name; 
             this.translation = translation; 
@@ -196,11 +290,19 @@ public final class Armour extends Equipment {
             return this; 
         }
         
+        /**
+         * Completes the Builder object to get the Armour object
+         * @return Armour with the set attributes
+         */
         public Armour build() {
             return new Armour(this);
         }
     }
     
+    /**
+     * Only called by the Builder.build() process
+     * @param builder containing the information for the Armour
+     */
     private Armour(final Builder builder) {
         this.physicalArmour = builder.physicalArmour;
         this.magicalArmour = builder.magicalArmour;

@@ -170,4 +170,39 @@ public final class Armour extends Equipment {
         return mat.getWeight();
     }
     
+    public static class Builder {
+        private int physicalArmour;
+        private int magicalArmour;
+        private Slot slot;
+        private Material mat;
+        private String name;
+        private Quality qual;
+        private int durability;
+        private EnumMap<MagicAttribute, Integer> magic;
+        
+        public Builder physicalArmour(int physicalArmour){this.physicalArmour = physicalArmour; return this; }
+        public Builder magicalArmour(int magicalArmour){this.magicalArmour = magicalArmour; return this; }
+        public Builder slot(Slot slot){this.slot = slot; return this; }
+        public Builder material(Material mat){this.mat = mat; return this; }
+        public Builder name(String name){this.name = name; return this; }
+        public Builder quality(Quality qual){this.qual = qual; return this; }
+        public Builder magic(MagicAttribute magicAttribute, int value){this.magic.put(magicAttribute, value); return this; }
+        public Builder durability(int durability){this.durability = durability; return this; }
+        
+        public Armour build() {
+            return new Armour(this);
+        }
+    }
+    
+    private Armour(Builder builder) {
+        this.physicalArmour = builder.physicalArmour;
+        this.magicalArmour = builder.magicalArmour;
+        this.slot = builder.slot;
+        this.mat = builder.mat;
+        super.setName(builder.name);
+        super.setBuilderDurability(builder.durability);
+        super.setQuality(builder.qual);
+        super.setMagicAttributes(builder.magic);
+    }
+    
 }

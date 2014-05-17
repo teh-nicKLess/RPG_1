@@ -101,5 +101,37 @@ public final class Weapon extends Equipment {
     public final Weight getWeight() {
         return type.getWeight();
     }
+    
+    public static class Builder {
+        private int damage;
+        private Type type;
+        private int range;
+        private String name;
+        private Quality qual;
+        private int durability;
+        private EnumMap<MagicAttribute, Integer> magic;
+        
+        public Builder damage(int damage){this.damage = damage; return this; }
+        public Builder type(Type type){this.type = type; return this; }
+        public Builder range(int range){this.range = range; return this; }
+        public Builder name(String name){this.name = name; return this; }
+        public Builder quality(Quality qual){this.qual = qual; return this; }
+        public Builder magic(MagicAttribute magicAttribute, int value){this.magic.put(magicAttribute, value); return this; }
+        public Builder durability(int durability){this.durability = durability; return this; }
+        
+        public Weapon build() {
+            return new Weapon(this);
+        }
+    }
+    
+    private Weapon(Builder builder) {
+        this.damage = builder.damage;
+        this.range = builder.range;
+        this.type = builder.type;
+        super.setName(builder.name);
+        super.setBuilderDurability(builder.durability);
+        super.setQuality(builder.qual);
+        super.setMagicAttributes(builder.magic);
+    }
 
 }

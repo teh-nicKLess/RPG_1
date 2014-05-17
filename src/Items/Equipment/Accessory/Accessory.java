@@ -1,6 +1,7 @@
 package Items.Equipment.Accessory;
 
 import Items.Equipment.Equipment;
+import Items.Equipment.MagicAttribute;
 import Items.Equipment.Weight;
 import Items.Quality;
 import java.util.EnumMap;
@@ -76,6 +77,35 @@ public class Accessory extends Equipment {
     @Override
     public final Weight getWeight() {
         return slot.getWeight();
+    }
+    
+    public static class Builder {
+        private Slot slot;
+        private Material mat;
+        private String name;
+        private Quality qual;
+        private int durability;
+        private EnumMap<MagicAttribute, Integer> magic;
+        
+        public Builder material(Material mat){this.mat = mat; return this; }
+        public Builder slot(Slot slot){this.slot = slot; return this; }
+        public Builder name(String name){this.name = name; return this; }
+        public Builder quality(Quality qual){this.qual = qual; return this; }
+        public Builder magic(MagicAttribute magicAttribute, int value){this.magic.put(magicAttribute, value); return this; }
+        public Builder durability(int durability){this.durability = durability; return this; }
+        
+        public Accessory build() {
+            return new Accessory(this);
+        }
+    }
+    
+    private Accessory(Builder builder) {
+        this.slot = builder.slot;
+        this.mat = builder.mat;
+        super.setName(builder.name);
+        super.setBuilderDurability(builder.durability);
+        super.setQuality(builder.qual);
+        super.setMagicAttributes(builder.magic);
     }
     
 }

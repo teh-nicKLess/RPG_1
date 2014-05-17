@@ -61,6 +61,12 @@ public abstract class Equipment extends Items {
         }
     }
     
+    protected final void setBuilderDurability(final int durability) {
+        if (maxDurability == 0) {
+            currentDurability = maxDurability = durability;
+        }
+    }
+    
     protected void setMagicAttributes(final int maxSlots, final Quality qual) {
         final EnumMap<MagicAttribute, Integer> magicMap = new EnumMap<MagicAttribute, Integer>(MagicAttribute.class);
         final int minSlots;
@@ -87,6 +93,10 @@ public abstract class Equipment extends Items {
             }
         }
         this.magic = magicMap;
+    }
+    
+    protected void setMagicAttributes(EnumMap<MagicAttribute, Integer> magic) {
+        this.magic = magic;
     }
     
     public EnumMap<MagicAttribute, Integer> getMagicAttributes() {

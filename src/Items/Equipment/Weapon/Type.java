@@ -34,30 +34,58 @@ public enum Type {
         this.maxMagicSlots = maxMagicSlots;
     }
     
+    /**
+     * returns true if the weapon is two handed
+     * @return true if the weapon is two handed
+     */
     protected final boolean isTwoHanded() {
         return twoHands;
     }
     
+    /**
+     * returns the weapon's base damage value
+     * @return the weapon's base damage value 
+     */
     protected final int getBaseDamage() {
         return baseDamage;
     }
     
+    /**
+     * returns the weapon's weight
+     * @return the weapon's weight 
+     */
     protected final Weight getWeight() {
         return weight;
     }
     
+    /**
+     * returns the weapon's durability value
+     * @return the weapon's durability value 
+     */
     protected final int getDurability() {
         return durability;
     }
     
+    /**
+     * returns the weapon's range
+     * @return the weapon's range
+     */
     protected final int getRange() {
         return range;
     }
     
+    /**
+     * returns the weapon's maximum magical slots
+     * @return the weapon's maximum magical slots
+     */
     protected final int getMaxMagicSlots() {
-        return maxMagicSlots == 0 ? 0 : maxMagicSlots + 1;
+        return maxMagicSlots;
     }
     
+    /**
+     * returns a random Type
+     * @return a random Type
+     */
     public static Type getRandomType() {
         return Type.values()[Randomizer.getRandomNumber(Type.values().length)];
     }

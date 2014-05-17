@@ -176,6 +176,7 @@ public final class Armour extends Equipment {
         private Slot slot;
         private Material mat;
         private String name;
+        private boolean translation;
         private Quality qual;
         private int durability;
         private EnumMap<MagicAttribute, Integer> magic;
@@ -184,7 +185,7 @@ public final class Armour extends Equipment {
         public Builder magicalArmour(final int magicalArmour){this.magicalArmour = magicalArmour; return this; }
         public Builder slot(final Slot slot){this.slot = slot; return this; }
         public Builder material(final Material mat){this.mat = mat; return this; }
-        public Builder name(final String name){this.name = name; return this; }
+        public Builder name(final String name, final boolean translation){this.name = name; this.translation = translation; return this; }
         public Builder quality(final Quality qual){this.qual = qual; return this; }
         public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
         public Builder durability(final int durability){this.durability = durability; return this; }
@@ -199,10 +200,15 @@ public final class Armour extends Equipment {
         this.magicalArmour = builder.magicalArmour;
         this.slot = builder.slot;
         this.mat = builder.mat;
-        super.setName(builder.name);
         super.setBuilderDurability(builder.durability);
         super.setQuality(builder.qual);
         super.setBuilderMagicAttributes(builder.magic);
+        if (builder.translation) {
+            final ResourceBundle name = ResourceBundle.getBundle("Internationalization.UniqueItemNames", mygame.RPG_1.currentLocale);
+            super.setName(name.getString(builder.name));
+        } else {
+            super.setName(builder.name);
+        }
     }
     
 }

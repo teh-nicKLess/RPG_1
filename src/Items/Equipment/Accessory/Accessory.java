@@ -104,7 +104,7 @@ public class Accessory extends Equipment {
         this.mat = mat;
         super.setQuality(qual);
         super.setName(nameMat.get(mat) + nameSlot.get(slot));
-        super.setDurability(qual, slot.getDurability());
+        super.setDurability(slot.getDurability());
         super.setMagicAttributes(mat.getMaxMagicSlots(), qual);
     }
     

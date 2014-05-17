@@ -145,7 +145,7 @@ public final class Armour extends Equipment {
         this.physicalArmour = this.calculatePhysicalArmor(slot, qual, mat.getPhysicalValue());
         this.magicalArmour = this.calculateMagicalArmor(qual, mat.getMagicalValue());
         super.setQuality(qual);
-        super.setDurability(qual, mat.getDurability());
+        super.setDurability(mat.getDurability());
         super.setName(nameMat.get(mat) + nameSlot.get(mat.getWeight()).get(slot));
         super.setMagicAttributes(mat.getMaxMagicSlots(), qual);
     }

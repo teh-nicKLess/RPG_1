@@ -75,7 +75,7 @@ public final class Weapon extends Equipment {
         this.type = type;
         super.setQuality(qual);
         this.damage = this.calculateDamage(qual, type.getBaseDamage());
-        super.setDurability(qual, type.getDurability());
+        super.setDurability(type.getDurability());
         this.range = type.getRange();
         super.setName(nameMap.get(type));
         super.setMagicAttributes(type.getMaxMagicSlots(), qual);

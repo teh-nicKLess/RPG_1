@@ -12,10 +12,13 @@ public class Accessory extends Equipment {
     
     private Slot slot;
     private Material mat;
+    //Holds part of the name coming from the material
     private static final EnumMap<Material, String> nameMat = new EnumMap<Material, String>(Material.class);
+    //Holds part of the name coming from the slot
     private static final EnumMap<Slot, String> nameSlot = new EnumMap<Slot, String>(Slot.class);
     
     static {
+        //Fill both enumMaps with the name parts of the currentLocale
         final ResourceBundle names = ResourceBundle.getBundle("Internationalization.Accessory", mygame.RPG_1.currentLocale);
         nameSlot.put(Slot.RING,         names.getString("RING"));
         nameSlot.put(Slot.NECKLACE,     names.getString("NECKLACE"));
@@ -29,34 +32,73 @@ public class Accessory extends Equipment {
         nameMat.put(Material.SAPPHIRE,  names.getString("SAPPHIRE"));
     }
     
+    /**
+     * Get a completly random Accessory
+     */
     public Accessory() {
         this(Slot.getRandomSlot(), Material.getRandomSlot(),Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Accessory with a given Slot
+     * @param slot to assign to the Accessory
+     */
     public Accessory(final Slot slot) {
         this(slot, Material.getRandomSlot(),Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Accessory with a given Quality
+     * @param qual to assign to the Accessory (can be used in conjuntion 
+     *              with Quality.getRandomQuality(maxQuality)
+     */
     public Accessory(final Quality qual) {
         this(Slot.getRandomSlot(), Material.getRandomSlot(), qual);
     }
     
+    /**
+     * Get a random Accessory with a given Material
+     * @param mat to assign to the Accessory
+     */
     public Accessory(final Material mat) {
         this(Slot.getRandomSlot(), mat, Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Accessory with a given Slot and Material
+     * @param slot to assign to the Accessory
+     * @param mat to assign to the Accessory
+     */
     public Accessory(final Slot slot, final Material mat) {
         this(slot, mat,Quality.getRandomQuality());
     }
     
+    /**
+     * Get a random Accessory with a given Material and Quality
+     * @param mat to assign to the Accessory
+     * @param qual to assign to the Accessory
+     */
     public Accessory(final Material mat, final Quality qual) {
         this(Slot.getRandomSlot(), mat, qual);
     }
     
+    /**
+     * Get a random Accessory with a given Slot and Quality
+     * @param slot to assign to the Accessory
+     * @param qual to assign to the Accessory
+     */
     public Accessory(final Slot slot, final Quality qual) {
         this(slot, Material.getRandomSlot(), qual);
     }
     
+    /**
+     * Get a random Accessory with a given Slot, Material and Quality
+     * If you wish to define every value yourself, please refer to
+     * Accessory.Builder
+     * @param slot to assign to the Accessory
+     * @param mat to assign to the Accessory
+     * @param qual to assign to the Accessory 
+     */
     public Accessory(final Slot slot, final Material mat, final Quality qual) {
         this.slot = slot;
         this.mat = mat;
@@ -66,19 +108,36 @@ public class Accessory extends Equipment {
         super.setMagicAttributes(mat.getMaxMagicSlots(), qual);
     }
     
+    /**
+     * returns the Slot object of the attribute
+     * @return the Slot object of the attribute
+     */
     public Slot getSlot() {
         return slot;
     }
     
+    /**
+     * returns the Material object of the attribute
+     * @return the Material object of the attribute
+     */
     public Material getMaterial() {
         return mat;
     }
     
+    /**
+     * returns the object's weight
+     * @return the object's weight 
+     */
     @Override
     public final Weight getWeight() {
         return slot.getWeight();
     }
     
+    /**
+     * If you wish to define every single attribute of the Accessory
+     * the Builder class is your friend. Make sure you set every 
+     * attribute before you call build().
+     */
     public static class Builder {
         private Slot slot;
         private Material mat;
@@ -94,6 +153,17 @@ public class Accessory extends Equipment {
         public Builder quality(final Quality qual){this.qual = qual; return this; }
         public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
         public Builder durability(final int durability){this.durability = durability; return this; }
+        /**
+         * Sets the Accessory's name. Can be either a Name on it's own like "Mjölnir" 
+         * -> set both booleans to false
+         * Or you may use the internationalization files: translation = true. 
+         * If the name is unique, unique must be set true.
+         * @param name the String to set / lookup
+         * @param translation set true if you wish to use the internationalization files
+         * @param unique set true if the name to look up is in the UniqueItemNames file, 
+         *              false: default Accessory file will be used
+         * @return the builder object itself.
+         */
         public Builder name(final String name, final boolean translation, final boolean unique) {
             this.name = name; 
             this.translation = translation; 
@@ -101,11 +171,19 @@ public class Accessory extends Equipment {
             return this; 
         }
         
+        /**
+         * Completes the Builder object to get the Accessory object
+         * @return Accessory with the set attributes
+         */
         public Accessory build() {
             return new Accessory(this);
         }
     }
     
+    /**
+     * Only called by the Builder.build() process
+     * @param builder containing the information for the Accessory
+     */
     private Accessory(final Builder builder) {
         this.slot = builder.slot;
         this.mat = builder.mat;

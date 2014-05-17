@@ -18,12 +18,17 @@ public enum Quality {
     private byte getRank() {
         return rank;
     }
-       
+     
+    /**
+     * returns a random Quality [COMMON, maxQ] - unique NOT included
+     * @param maxQ the best outcome of the random draft (upper bound)
+     * @return a random Quality (not Unique)
+     */
     public static Quality getRandomQuality(final Quality maxQ) {
         if (maxQ.equals(UNIQUE)) {
             throw new IllegalArgumentException("No random uniques!");
         }
-        final byte rating = (byte)Randomizer.getRandomNumber(maxQ.getRank() + 1);
+        final byte rating = (byte)Randomizer.getRandomNumberNIncluded(maxQ.getRank());
         assert (rating <= maxQ.getRank());
         
         if (rating <= Quality.COMMON.getRank()) {
@@ -42,6 +47,10 @@ public enum Quality {
         }
     }
     
+    /**
+     * returns a random Quality [COMMON, LEGENDARY] - unique NOT included
+     * @return a random Quality
+     */
     public static Quality getRandomQuality() {
         return getRandomQuality(Quality.LEGENDARY);
     }

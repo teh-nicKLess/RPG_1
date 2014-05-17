@@ -108,6 +108,7 @@ public final class Weapon extends Equipment {
         private int range;
         private String name;
         private boolean translation;
+        private boolean unique;
         private Quality qual;
         private int durability;
         private EnumMap<MagicAttribute, Integer> magic;
@@ -115,10 +116,16 @@ public final class Weapon extends Equipment {
         public Builder damage(final int damage){this.damage = damage; return this; }
         public Builder type(final Type type){this.type = type; return this; }
         public Builder range(final int range){this.range = range; return this; }
-        public Builder name(final String name, final boolean translation){this.name = name; this.translation = translation; return this; }
         public Builder quality(final Quality qual){this.qual = qual; return this; }
         public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
         public Builder durability(final int durability){this.durability = durability; return this; }
+        public Builder name(final String name, final boolean translation, final boolean unique) {
+            this.name = name; 
+            this.translation = translation; 
+            this.unique = unique;
+            return this; 
+        }
+        
         
         public Weapon build() {
             return new Weapon(this);
@@ -133,7 +140,12 @@ public final class Weapon extends Equipment {
         super.setQuality(builder.qual);
         super.setBuilderMagicAttributes(builder.magic);
         if (builder.translation) {
-            final ResourceBundle name = ResourceBundle.getBundle("Internationalization.UniqueItemNames", mygame.RPG_1.currentLocale);
+            final ResourceBundle name;
+            if (builder.unique) {
+                name = ResourceBundle.getBundle("Internationalization.UniqueItemNames", mygame.RPG_1.currentLocale);
+            } else {
+                name = ResourceBundle.getBundle("Internationalization.Weapon", mygame.RPG_1.currentLocale);
+            }
             super.setName(name.getString(builder.name));
         } else {
             super.setName(builder.name);

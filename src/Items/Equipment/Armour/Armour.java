@@ -177,6 +177,7 @@ public final class Armour extends Equipment {
         private Material mat;
         private String name;
         private boolean translation;
+        private boolean unique;
         private Quality qual;
         private int durability;
         private EnumMap<MagicAttribute, Integer> magic;
@@ -185,10 +186,15 @@ public final class Armour extends Equipment {
         public Builder magicalArmour(final int magicalArmour){this.magicalArmour = magicalArmour; return this; }
         public Builder slot(final Slot slot){this.slot = slot; return this; }
         public Builder material(final Material mat){this.mat = mat; return this; }
-        public Builder name(final String name, final boolean translation){this.name = name; this.translation = translation; return this; }
         public Builder quality(final Quality qual){this.qual = qual; return this; }
         public Builder magic(final MagicAttribute magicAttribute, final int value){this.magic.put(magicAttribute, value); return this; }
         public Builder durability(final int durability){this.durability = durability; return this; }
+        public Builder name(final String name, final boolean translation, final boolean unique) {
+            this.name = name; 
+            this.translation = translation; 
+            this.unique = unique;
+            return this; 
+        }
         
         public Armour build() {
             return new Armour(this);
@@ -204,7 +210,12 @@ public final class Armour extends Equipment {
         super.setQuality(builder.qual);
         super.setBuilderMagicAttributes(builder.magic);
         if (builder.translation) {
-            final ResourceBundle name = ResourceBundle.getBundle("Internationalization.UniqueItemNames", mygame.RPG_1.currentLocale);
+            final ResourceBundle name;
+            if (builder.unique) {
+                name = ResourceBundle.getBundle("Internationalization.UniqueItemNames", mygame.RPG_1.currentLocale);
+            } else {
+                name = ResourceBundle.getBundle("Internationalization.Armour", mygame.RPG_1.currentLocale);
+            }
             super.setName(name.getString(builder.name));
         } else {
             super.setName(builder.name);

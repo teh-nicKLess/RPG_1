@@ -236,7 +236,19 @@ public final class Armour extends Equipment {
     
     @Override
     public String toString() {
-        return "Slot: " + slot + "; Material: " + mat + "; Quality: " + super.getQuality() + "; Armour: " + physicalArmour;
+        StringBuilder sb = new StringBuilder(200);
+        sb.append("Name: "); sb.append(super.getName()); sb.append("\n");
+        sb.append("Quality: "); sb.append(super.getQuality()); sb.append("\n");
+        sb.append("C Durability: "); sb.append(super.getDurabilityCurrent()); sb.append("\n");
+        sb.append("M Durability: "); sb.append(super.getDurabilityMax()); sb.append("\n");
+        sb.append("Magic Attributes: "); sb.append(super.getMagicAttributes()); sb.append("\n");
+        sb.append("Physical Armour: "); sb.append(this.getPhysicalArmour()); sb.append("\n");
+        sb.append("TOTAL Physical Armour: "); sb.append(this.getTotalPhysicalArmour()); sb.append("\n");
+        sb.append("Magical Armour: "); sb.append(this.getMagicalArmour()); sb.append("\n");
+        sb.append("TOTAL Magical Armour: "); sb.append(this.getTotalMagicalArmour()); sb.append("\n");
+        sb.append("Slot: "); sb.append(this.getSlot()); sb.append("\n");
+        sb.append("Material: "); sb.append(this.getMaterial()); sb.append("\n");
+        return sb.toString();
     }
 
     /**

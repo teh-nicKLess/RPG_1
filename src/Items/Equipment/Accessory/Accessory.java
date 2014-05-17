@@ -124,6 +124,19 @@ public class Accessory extends Equipment {
         return mat;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(200);
+        sb.append("Name: "); sb.append(super.getName()); sb.append("\n");
+        sb.append("Quality: "); sb.append(super.getQuality()); sb.append("\n");
+        sb.append("C Durability: "); sb.append(super.getDurabilityCurrent()); sb.append("\n");
+        sb.append("M Durability: "); sb.append(super.getDurabilityMax()); sb.append("\n");
+        sb.append("Magic Attributes: "); sb.append(super.getMagicAttributes()); sb.append("\n");
+        sb.append("Slot: "); sb.append(this.getSlot()); sb.append("\n");
+        sb.append("Material: "); sb.append(this.getMaterial()); sb.append("\n");
+        return sb.toString();
+    }
+    
     /**
      * returns the object's weight
      * @return the object's weight 

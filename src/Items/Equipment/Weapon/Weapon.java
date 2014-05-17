@@ -142,7 +142,17 @@ public final class Weapon extends Equipment {
     
     @Override
     public String toString() {
-        return "Range: " + range + "; Type: " + type + "; Quality: " + super.getQuality() + "; Damage: " + damage;
+        StringBuilder sb = new StringBuilder(200);
+        sb.append("Name: "); sb.append(super.getName()); sb.append("\n");
+        sb.append("Quality: "); sb.append(super.getQuality()); sb.append("\n");
+        sb.append("C Durability: "); sb.append(super.getDurabilityCurrent()); sb.append("\n");
+        sb.append("M Durability: "); sb.append(super.getDurabilityMax()); sb.append("\n");
+        sb.append("Magic Attributes: "); sb.append(super.getMagicAttributes()); sb.append("\n");
+        sb.append("Damage: "); sb.append(this.getDamage()); sb.append("\n");
+        sb.append("TOTAL Damage: "); sb.append(this.getTotalDamage()); sb.append("\n");
+        sb.append("Range: "); sb.append(this.getRange()); sb.append("\n");
+        sb.append("Type: "); sb.append(this.getType()); sb.append("\n");
+        return sb.toString();
     }
 
     /**

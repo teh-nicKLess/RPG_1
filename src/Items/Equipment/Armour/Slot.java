@@ -12,10 +12,18 @@ public enum Slot {
         this.multiplier = multiplier;
     }
 
+    /**
+     * returns the slot's multiplier value for armour calculation
+     * @return the slot's multiplier value for armour calculation
+     */
     protected final byte getMultiplier() { 
         return multiplier; 
     }
     
+    /**
+     * returns a random Slot
+     * @return a random Slot
+     */
     public static Slot getRandomSlot() {
         return Slot.values()[Randomizer.getRandomNumber(Slot.values().length)]; 
     }

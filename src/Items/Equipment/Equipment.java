@@ -1,12 +1,12 @@
 package Items.Equipment;
 
-import Items.Items;
+import Items.Item;
 import Items.Quality;
 import Utilities.Randomizer;
 import java.util.EnumMap;
 
 
-public abstract class Equipment extends Items {
+public abstract class Equipment extends Item {
     
     private int currentDurability = 0;
     private int maxDurability = 0;

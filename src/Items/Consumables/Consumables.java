@@ -1,8 +1,8 @@
 package Items.Consumables;
 
-import Items.Items;
+import Items.Item;
 
 
-public abstract class Consumables extends Items {
+public abstract class Consumables extends Item {
     
 }

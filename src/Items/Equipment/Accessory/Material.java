@@ -32,7 +32,7 @@ public enum Material {
      * returns a random Material
      * @return a random Material
      */
-    public static Material getRandomSlot() {
+    public static Material getRandomMaterial() {
         return Material.values()[Randomizer.getRandomNumber(Material.values().length)];
     }
 }

@@ -36,7 +36,7 @@ public class Accessory extends Equipment {
      * Get a completly random Accessory
      */
     public Accessory() {
-        this(Slot.getRandomSlot(), Material.getRandomSlot(),Quality.getRandomQuality());
+        this(Slot.getRandomSlot(), Material.getRandomMaterial(),Quality.getRandomQuality());
     }
     
     /**
@@ -44,7 +44,7 @@ public class Accessory extends Equipment {
      * @param slot to assign to the Accessory
      */
     public Accessory(final Slot slot) {
-        this(slot, Material.getRandomSlot(),Quality.getRandomQuality());
+        this(slot, Material.getRandomMaterial(),Quality.getRandomQuality());
     }
     
     /**
@@ -53,7 +53,7 @@ public class Accessory extends Equipment {
      *              with Quality.getRandomQuality(maxQuality)
      */
     public Accessory(final Quality qual) {
-        this(Slot.getRandomSlot(), Material.getRandomSlot(), qual);
+        this(Slot.getRandomSlot(), Material.getRandomMaterial(), qual);
     }
     
     /**
@@ -88,7 +88,7 @@ public class Accessory extends Equipment {
      * @param qual to assign to the Accessory
      */
     public Accessory(final Slot slot, final Quality qual) {
-        this(slot, Material.getRandomSlot(), qual);
+        this(slot, Material.getRandomMaterial(), qual);
     }
     
     /**

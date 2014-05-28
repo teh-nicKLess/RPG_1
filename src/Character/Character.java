@@ -2,18 +2,21 @@ package Character;
 
 import Items.Equipment.Accessory.Accessory;
 import Items.Equipment.Armour.Bodypart;
+import Items.Equipment.Equipment;
 import Items.Equipment.MagicAttribute;
+import Items.Equipment.Weapon.Weapon;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
 
 public abstract class Character {
     
-    private final static ArrayList<MagicAttribute> movementSpeedAttr = new ArrayList<MagicAttribute>();
-    private final static ArrayList<MagicAttribute> weaponDamageAttr = new ArrayList<MagicAttribute>();
-    private final static ArrayList<MagicAttribute> physicalArmourAttr = new ArrayList<MagicAttribute>();
-    private final static ArrayList<MagicAttribute> magicalArmourAttr = new ArrayList<MagicAttribute>();
-    private final static ArrayList<MagicAttribute> attackSpeedAttr = new ArrayList<MagicAttribute>();
+    private final static ArrayList<MagicAttribute> movementSpeedAttr = new ArrayList<MagicAttribute>(2);
+    private final static ArrayList<MagicAttribute> weaponDamageAttr = new ArrayList<MagicAttribute>(2);
+    private final static ArrayList<MagicAttribute> spellDamageAttr = new ArrayList<MagicAttribute>(2);
+    private final static ArrayList<MagicAttribute> physicalArmourAttr = new ArrayList<MagicAttribute>(2);
+    private final static ArrayList<MagicAttribute> magicalArmourAttr = new ArrayList<MagicAttribute>(2);
+    private final static ArrayList<MagicAttribute> attackSpeedAttr = new ArrayList<MagicAttribute>(2);
     
     static {
         movementSpeedAttr.add(MagicAttribute.SPEED);
@@ -25,6 +28,9 @@ public abstract class Character {
         weaponDamageAttr.add(MagicAttribute.WEAPONDAMAGE);
         weaponDamageAttr.add(MagicAttribute.DAMAGE);
         
+        spellDamageAttr.add(MagicAttribute.SPELLDAMAGE);
+        spellDamageAttr.add(MagicAttribute.DAMAGE);
+        
         physicalArmourAttr.add(MagicAttribute.ARMOUR);
         physicalArmourAttr.add(MagicAttribute.DAMAGEREDUCTION);
         
@@ -34,34 +40,10 @@ public abstract class Character {
     
     private Loadout loadout;
     private ArrayList<Inventory> inv;
-    private BaseStats baseStats;
-    private int movementSpeed;
-    private int weaponDamage;
-    private int physicalArmour;
-    private int magicalArmour;
-    private int attackSpeed;
-
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
-    public int getWeaponDamage() {
-        return weaponDamage;
-    }
-
-    public int getPhysicalArmour() {
-        return physicalArmour;
-    }
-
-    public int getMagicalArmour() {
-        return magicalArmour;
-    }
-
-    public int getAttackSpeed() {
-        return attackSpeed;
-    }
-
-    protected Loadout getLoadout(){
+    private Stats stats;
+     
+    
+    protected Loadout getLoadout() {
         return loadout;
     }
     
@@ -73,67 +55,63 @@ public abstract class Character {
         this.updateMovementSpeed();
         this.updateAttackSpeed();
         this.updateWeaponDamage();
+        this.updateSpellDamage();
         this.updatePhysicalArmour();
         this.updateMagicalArmour();
     }
     
     private void updateMovementSpeed() {
-        movementSpeed = baseStats.getMovementSpeed();
-        movementSpeed += this.calculateValueFor(movementSpeedAttr);
+        stats.setEquipmentMovementSpeed(this.calculateValueFor(movementSpeedAttr));
     }
     
     private void updateAttackSpeed() {
-        attackSpeed = baseStats.getAttackSpeed();
-        attackSpeed += this.calculateValueFor(attackSpeedAttr);
+        stats.setEquipmentAttackSpeed(this.calculateValueFor(attackSpeedAttr));
     }
     
     private void updateWeaponDamage() {
-        weaponDamage = baseStats.getWeaponDamage();
-        weaponDamage += this.calculateValueFor(weaponDamageAttr);
+        stats.setEquipmentWeaponDamage(this.calculateValueFor(weaponDamageAttr));
+    }
+    
+    private void updateSpellDamage() {
+        stats.setEquipmentSpellDamage(this.calculateValueFor(spellDamageAttr));
     }
     
     private void updatePhysicalArmour() {
-        physicalArmour = baseStats.getPhysicalArmour();
-        physicalArmour += this.calculateValueFor(physicalArmourAttr);
+        stats.setEquipmentPhysicalArmour(this.calculateValueFor(physicalArmourAttr));
     }
     
     private void updateMagicalArmour() {
-        magicalArmour = baseStats.getMagicalArmour();
-        magicalArmour += this.calculateValueFor(magicalArmourAttr);
+        stats.setEquipmentMagicalArmour(this.calculateValueFor(magicalArmourAttr));
     }
     
-    private int calculateValueFor(ArrayList<MagicAttribute> magiType) {
-        int temp = 0;
+    private int calculateValueFor(final ArrayList<MagicAttribute> magiType) {
+        int value = 0;
         for (Accessory ac : loadout.getAccessories()) {
             EnumMap<MagicAttribute, Integer> attributes = ac.getMagicAttributes();
-            for (MagicAttribute magi : magiType) {
-                if (attributes.containsKey(magi)) {
-                    temp += attributes.get(magi);
-                }
-            }
+            value += this.extractValue(ac, magiType);
         } 
         for (Bodypart bp : Bodypart.values()) {
-            EnumMap<MagicAttribute, Integer> attributes = loadout.getArmour(bp).getMagicAttributes();
-            for (MagicAttribute magi : magiType) {
-                if (attributes.containsKey(magi)) {
-                    temp += attributes.get(magi);
-                }
+            if (loadout.getArmour(bp) != null) {
+                value += this.extractValue(loadout.getArmour(bp), magiType);
             }
         }
-        EnumMap<MagicAttribute, Integer> primAttributes = loadout.getWeapon(true).getMagicAttributes();
+        for (Weapon w : loadout.getWeapons()) {
+            if (w != null) {
+                value += this.extractValue(w, magiType);
+            }
+        }
+        return value;
+    }
+    
+    private int extractValue(final Equipment equip, final ArrayList<MagicAttribute> magiType) {
+        int value = 0;
+        EnumMap<MagicAttribute, Integer> attributes = equip.getMagicAttributes();
         for (MagicAttribute magi : magiType) {
-            if (primAttributes.containsKey(magi)) {
-                temp += primAttributes.get(magi);
+            if (attributes.containsKey(magi)) {
+                value += attributes.get(magi);
             }
         }
-        EnumMap<MagicAttribute, Integer> secAttributes = loadout.getWeapon(false).getMagicAttributes();
-        for (MagicAttribute magi : magiType) {
-            if (secAttributes.containsKey(magi)) {
-                temp += secAttributes.get(magi);
-            }
-        }
-        
-        return temp;
+        return value;
     }
     
     

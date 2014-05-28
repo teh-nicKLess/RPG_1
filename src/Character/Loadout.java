@@ -69,6 +69,10 @@ public class Loadout {
         return primary ? weapon[primarySlot] : weapon[secondarySlot];
     }
     
+    public Weapon[] getWeapons() {
+        return weapon.clone();
+    }
+    
     public Accessory getAccessory(final int slotIndex) {
         return accessory.get(slotIndex);
     }

@@ -4,19 +4,19 @@ package Character;
 public class Stats {
     
     private final BaseStats base;
-    private int equipmentMovementSpeed;
-    private int equipmentWeaponDamage;
-    private int equipmentSpellDamage;
-    private int equipmentPhysicalArmour;
-    private int equipmentMagicalArmour;
-    private int equipmentAttackSpeed;
+    private int equipmentMovementSpeed = 0;
+    private int equipmentWeaponDamage = 0;
+    private int equipmentSpellDamage = 0;
+    private int equipmentPhysicalArmour = 0;
+    private int equipmentMagicalArmour = 0;
+    private int equipmentAttackSpeed = 0;
     
-    private int strength;
-    private int intelligence;
-    private int dexterity;
-    private int hitpoints;
-    private int agility;
-    private int condition;
+    private int strength = 0;
+    private int intelligence = 0;
+    private int dexterity = 0;
+    private int hitpoints = 0;
+    private int agility = 0;
+    private int condition = 0;
 
     
     public Stats(BaseStats base) {
@@ -52,11 +52,11 @@ public class Stats {
         return base.getAgility() + equipmentMovementSpeed;
     }
 
-    public int getWeaponDamage() {
+    public int getWeaponDamageBonus() {
         return this.getStrength() + equipmentWeaponDamage;
     }
     
-    public int getSpellDamage() {
+    public int getSpellDamageBonus() {
         return this.getIntelligence() + equipmentSpellDamage;
     }
 

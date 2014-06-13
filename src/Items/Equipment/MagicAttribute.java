@@ -5,8 +5,10 @@ import Utilities.Randomizer;
 
 public enum MagicAttribute {
     
+    //MagicEfficiency is a Percent number while all others are numbers as such
+    
     ARMOUR(10), SPELLRESISTANCE(10), DAMAGEREDUCTION(5),
-    WEAPONDAMAGE(10), SPELLDAMAGE(10), DAMAGE(5), 
+    WEAPONDAMAGE(10), MAGICEFFICIENCY(150), DAMAGE(5), 
     MOVEMENTSPEED(10), ATTACKSPEED(10), SPEED(5);
     
     

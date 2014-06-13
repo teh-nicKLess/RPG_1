@@ -107,7 +107,6 @@ public abstract class Character {
     private int calculateValueFor(final ArrayList<MagicAttribute> magiType) {
         int value = 0;
         for (Accessory ac : loadout.getAccessories()) {
-            EnumMap<MagicAttribute, Integer> attributes = ac.getMagicAttributes();
             value += this.extractValue(ac, magiType);
         } 
         for (Bodypart bp : Bodypart.values()) {

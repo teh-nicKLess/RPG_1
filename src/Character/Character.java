@@ -13,7 +13,7 @@ public abstract class Character {
     
     private final static ArrayList<MagicAttribute> movementSpeedAttr = new ArrayList<MagicAttribute>(2);
     private final static ArrayList<MagicAttribute> weaponDamageAttr = new ArrayList<MagicAttribute>(2);
-    private final static ArrayList<MagicAttribute> spellDamageAttr = new ArrayList<MagicAttribute>(2);
+    private final static ArrayList<MagicAttribute> magicEfficiency = new ArrayList<MagicAttribute>(2);
     private final static ArrayList<MagicAttribute> physicalArmourAttr = new ArrayList<MagicAttribute>(2);
     private final static ArrayList<MagicAttribute> magicalArmourAttr = new ArrayList<MagicAttribute>(2);
     private final static ArrayList<MagicAttribute> attackSpeedAttr = new ArrayList<MagicAttribute>(2);
@@ -28,8 +28,7 @@ public abstract class Character {
         weaponDamageAttr.add(MagicAttribute.WEAPONDAMAGE);
         weaponDamageAttr.add(MagicAttribute.DAMAGE);
         
-        spellDamageAttr.add(MagicAttribute.SPELLDAMAGE);
-        spellDamageAttr.add(MagicAttribute.DAMAGE);
+        magicEfficiency.add(MagicAttribute.MAGICEFFICIENCY);
         
         physicalArmourAttr.add(MagicAttribute.ARMOUR);
         physicalArmourAttr.add(MagicAttribute.DAMAGEREDUCTION);
@@ -93,7 +92,7 @@ public abstract class Character {
     }
     
     private void updateSpellDamage() {
-        stats.setEquipmentSpellDamage(this.calculateValueFor(spellDamageAttr));
+        stats.setEquipmentMagicEfficiency(this.calculateValueFor(magicEfficiency));
     }
     
     private void updatePhysicalArmour() {

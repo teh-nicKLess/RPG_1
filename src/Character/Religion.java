@@ -1,11 +1,11 @@
 package Character;
 
 
-public enum BaseStats {
+public enum Religion {
     
-    HUMAN   (10, 10, 10, 10, 10, 10, 100, 10, 10), 
-    ORK     (15, 5,  5,  15, 5,  15, 80,  15, 5), 
-    SKELETON(5,  15, 10, 10, 10, 10, 120, 5,  15);
+    REL_1   (10, 10, 10, 10, 10, 10, 100), 
+    REL_2   (10, 10, 10, 10, 10, 10, 100), 
+    REL_3   (10, 10, 10, 10, 10, 10, 100);
     
     
     private final int strength;
@@ -16,11 +16,8 @@ public enum BaseStats {
     private final int condition;
     private final int magicEfficiency;
     
-    private final int physicalResistance;
-    private final int magicalResistance;
-        
     
-    private BaseStats(int str, int intel, int dex, int hp, int ag, int con, int me, int pa, int ma) {
+    private Religion(int str, int intel, int dex, int hp, int ag, int con, int me) {
         this.strength = str;
         this.intelligence = intel;
         this.dexterity = dex;
@@ -28,10 +25,7 @@ public enum BaseStats {
         this.agility = ag;
         this.condition = con;
         this.magicEfficiency = me;
-        this.physicalResistance = pa;
-        this.magicalResistance = ma;
     }
-    
     
     protected int getStrength() {
         return strength;
@@ -60,14 +54,5 @@ public enum BaseStats {
     protected int getMagicEfficiency() {
         return magicEfficiency;
     }
-    
-    protected int getPhysicalResistance() {
-        return physicalResistance;
-    }
-    
-    protected int getMagicalResistance() {
-        return magicalResistance;
-    }
-    
     
 }

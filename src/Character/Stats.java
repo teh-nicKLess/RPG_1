@@ -4,12 +4,14 @@ package Character;
 public class Stats {
     
     private final BaseStats base;
+    private Religion religion;
+    
     private int equipmentMovementSpeed = 0;
     private int equipmentWeaponDamage = 0;
-    private int equipmentSpellDamage = 0;
     private int equipmentPhysicalArmour = 0;
     private int equipmentMagicalArmour = 0;
     private int equipmentAttackSpeed = 0;
+    private int equipmentMagicEfficiency = 1;
     
     private int strength = 0;
     private int intelligence = 0;
@@ -17,6 +19,7 @@ public class Stats {
     private int hitpoints = 0;
     private int agility = 0;
     private int condition = 0;
+    private int magicEfficiency = 1;
 
     
     public Stats(BaseStats base) {
@@ -24,48 +27,52 @@ public class Stats {
     }
     
     
+    public Religion getReligion() {
+        return religion;
+    }
+    
     public int getStrength() {
-        return base.getStrength() + strength;
+        return base.getStrength() + religion.getStrength() + strength;
     }
     
     public int getIntelligence() {
-        return base.getIntelligence() + intelligence;
+        return base.getIntelligence() + religion.getIntelligence() + intelligence;
     }
     
     public int getDexterity() {
-        return base.getDexterity() + dexterity;
+        return base.getDexterity() + religion.getDexterity() + dexterity;
     }
     
     public int getHitpoints() {
-        return base.getHitpoints() + hitpoints;
+        return base.getHitpoints() + religion.getHitpoints() + hitpoints;
     }
     
     public int getAgility() {
-        return base.getAgility() + agility;
+        return base.getAgility() + religion.getAgility() + agility;
     }
     
     public int getCondition() {
-        return base.getCondition() + condition;
+        return base.getCondition() + religion.getCondition() + condition;
     }
     
     public int getMovementSpeed() {
-        return base.getAgility() + equipmentMovementSpeed;
+        return this.getAgility() + equipmentMovementSpeed;
     }
 
     public int getWeaponDamageBonus() {
         return this.getStrength() + equipmentWeaponDamage;
     }
     
-    public int getSpellDamageBonus() {
-        return this.getIntelligence() + equipmentSpellDamage;
+    public int getMagicEfficiency() {
+        return this.getIntelligence() * equipmentMagicEfficiency * magicEfficiency;
     }
 
     public int getPhysicalArmour() {
-        return base.getPhysicalArmour() + equipmentPhysicalArmour;
+        return base.getPhysicalResistance() + equipmentPhysicalArmour;
     }
 
     public int getMagicalArmour() {
-        return base.getMagicalArmour() + equipmentMagicalArmour;
+        return base.getMagicalResistance() + equipmentMagicalArmour;
     }
 
     public int getAttackSpeed() {
@@ -80,8 +87,8 @@ public class Stats {
         equipmentWeaponDamage = value;
     }
     
-    protected void setEquipmentSpellDamage(int value) {
-        equipmentSpellDamage = value;
+    protected void setEquipmentMagicEfficiency(int value) {
+        equipmentMagicEfficiency = value;
     }
     
     protected void setEquipmentPhysicalArmour(int value) {
@@ -96,5 +103,36 @@ public class Stats {
         equipmentAttackSpeed = value;
     }
     
+    protected void setStrength(int value) {
+        this.strength = value;
+    }
+    
+    protected void setIntelligence(int value) {
+        this.intelligence = value;
+    }
+    
+    protected void setDexterity(int value) {
+        this.dexterity = value;
+    }
+    
+    protected void setHitpoints(int value) {
+        this.hitpoints = value;
+    }
+    
+    protected void setAgility(int value) {
+        this.agility = value;
+    }
+    
+    protected void setCondition(int value) {
+        this.condition = value;
+    }
+    
+    protected void setMagicEfficiency(int value) {
+        this.magicEfficiency = value;
+    }
+    
+    protected void setReligion(Religion religion) {
+        this.religion = religion;
+    }
     
 }

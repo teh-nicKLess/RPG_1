@@ -39,16 +39,36 @@ public abstract class Character {
     }
     
     private Loadout loadout;
-    private ArrayList<Inventory> inv;
+    private ArrayList<Inventory> inv = new ArrayList<Inventory>();
     private Stats stats;
      
     
-    protected Loadout getLoadout() {
+    public Stats getStats() {
+        return stats;
+    }
+    
+    public Loadout getLoadout() {
         return loadout;
+    }
+    
+    public void addInventory(Inventory inv) {
+        this.inv.add(inv);
     }
     
     protected ArrayList<Inventory> getInventory() {
         return inv;
+    }
+    
+    protected void setStats(BaseStats bs) {
+        if (stats == null) {
+            stats = new Stats(bs);
+        }
+    }
+    
+    protected void setLoadout(Loadout lo) {
+        if (loadout == null) {
+            this.loadout = lo;
+        }
     }
     
     protected void onEquipmentChange() {

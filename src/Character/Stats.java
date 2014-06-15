@@ -11,7 +11,7 @@ public class Stats {
     private int equipmentPhysicalArmour = 0;
     private int equipmentMagicalArmour = 0;
     private int equipmentAttackSpeed = 0;
-    private int equipmentMagicEfficiency = 1;
+    private int equipmentMagicEfficiency = 100;
     
     private int strength = 0;
     private int intelligence = 0;
@@ -19,7 +19,7 @@ public class Stats {
     private int hitpoints = 0;
     private int agility = 0;
     private int condition = 0;
-    private int magicEfficiency = 1;
+    private int magicEfficiency = 100;
 
     
     public Stats(BaseStats base) {
@@ -63,8 +63,11 @@ public class Stats {
         return this.getStrength() + equipmentWeaponDamage;
     }
     
-    public int getMagicEfficiency() {
-        return this.getIntelligence() * equipmentMagicEfficiency * magicEfficiency;
+    public float getMagicEfficiency() {
+        return (this.getIntelligence() 
+                    * ((base.getMagicEfficiency() + equipmentMagicEfficiency 
+                        + magicEfficiency  + religion.getMagicEfficiency()) / 4f)
+                / 10000f);
     }
 
     public int getPhysicalArmour() {

@@ -27,31 +27,31 @@ public enum Religion {
         this.magicEfficiency = me;
     }
     
-    protected int getStrength() {
+    public int getStrength() {
         return strength;
     }
     
-    protected int getIntelligence() {
+    public int getIntelligence() {
         return intelligence;
     }
     
-    protected int getDexterity() {
+    public int getDexterity() {
         return dexterity;
     }
     
-    protected int getHitpoints() {
+    public int getHitpoints() {
         return hitpoints;
     }
     
-    protected int getAgility() {
+    public int getAgility() {
         return agility;
     }
     
-    protected int getCondition() {
+    public int getCondition() {
         return condition;
     }
     
-    protected int getMagicEfficiency() {
+    public int getMagicEfficiency() {
         return magicEfficiency;
     }
     

@@ -4,8 +4,8 @@ package Character;
 public enum BaseStats {
     
     HUMAN   (10, 10, 10, 10, 10, 10, 100, 10, 10), 
-    ORK     (15, 5,  5,  15, 5,  15, 80,  15, 5), 
-    SKELETON(5,  15, 10, 10, 10, 10, 120, 5,  15);
+    ORK     (15, 5,  5,  20, 5,  15, 80,  15, 5), 
+    SKELETON(5,  15, 10, 5,  10, 10, 120, 5,  15);
     
     
     private final int strength;
